@@ -12,4 +12,28 @@ class Person extends Model
     protected $table = 'people';
 
     protected $fillable = [ 'dni', 'name', 'address', 'phone', 'community_id', 'parish_id' ];
+
+    protected $appends = [
+        'full_address'
+    ];
+
+    public function getFullAddressAttribute()
+    {
+        return "{$this->parish->name}, {$this->community->name}, {$this->address}";
+    }
+
+    public function parish()
+    {
+        return $this->belongsTo(Parish::class);
+    }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

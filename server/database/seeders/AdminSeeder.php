@@ -21,7 +21,7 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('qwerty123'),
             'active' => true,
             'activation_token' => Str::random(60),
-            'remember_token' => Str::random(10),
+            //'remember_token' => Str::random(10),
             'role_id' => 1
         ]);
     }
