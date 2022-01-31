@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest()->with(['role', 'person']);
+        $query = User::latest()->with(['role']);
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -31,11 +31,11 @@ class UserController extends Controller
             if (array_key_exists('email', $filters)) {
                 $query->whereLike('email', $filters['email']);
             }
-            if (array_key_exists('name', $filters)) {
+            /*if (array_key_exists('name', $filters)) {
                 $query->whereHas('person', function ($query) use ($filters) {
                     return $query->whereLike('name', $filters['name']);
                 });
-            }
+            }*/
 
             if (array_key_exists('rol', $filters)) {
                 $query->whereHas('role', function ($query) use ($filters) {
@@ -111,14 +111,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    /*public function show(User $user)
     {
         $query = $user->load([
                 'person.applications',
             ])->loadCount('applications');
 
         return Response($query);
-    }
+    }*/
 
 
     public function activate($token)

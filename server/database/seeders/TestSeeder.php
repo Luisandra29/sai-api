@@ -8,6 +8,8 @@ use App\Models\Application;
 use App\Models\Category;
 use App\Models\Person;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 
 class TestSeeder extends Seeder
 {
@@ -18,21 +20,30 @@ class TestSeeder extends Seeder
      */
     public function run()
     {
-        $people = factory(Person::class, 5)->create();
+        //$people = factory(Person::class, 5)->create();
 
-        factory(Application::class, 5)->create([
+        $people = Person::factory()->count(5)->create();
+
+        /*factory(Application::class, 5)->create([
+            'category_id' => '1',
+            'state_id' => '1',
+            'person_id' => '1',
+        ]);*/
+
+        Application::factory()->count(5)->create([
             'category_id' => '1',
             'state_id' => '1',
             'person_id' => '1',
         ]);
 
-        factory(Application::class, 5)->create([
+
+        Application::factory()->count(5)->create([
             'category_id' => '2',
             'state_id' => '2',
             'person_id' => '3',
         ]);
 
-        factory(Application::class, 5)->create([
+        Application::factory()->count(5)->create([
             'category_id' => '4',
             'state_id' => '3',
             'person_id' => '4',

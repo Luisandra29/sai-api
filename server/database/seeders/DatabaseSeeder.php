@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Application;
+use App\Models\Application;
+use Illuminate\Support\Facades\App;
+
 
 
 class DatabaseSeeder extends Seeder

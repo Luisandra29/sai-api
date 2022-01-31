@@ -12,7 +12,7 @@ class ParishController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = Parish::query();
         $results = $request->perPage;
@@ -32,7 +32,7 @@ class ParishController extends Controller
 
     public function show(Parish $parish)
     {
-        return Response($parish->load('applications', 'users'));
+        return Response($parish->load('applications', 'people'));
     }
 
     public function getCommunities(Parish $parish)
