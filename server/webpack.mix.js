@@ -1,5 +1,8 @@
-const mix = require('laravel-mix');
+//const mix = require('laravel-mix');
 
+
+const mix = require('laravel-mix');
+const { MIX_PROXY_URL } = process.env;
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +14,23 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+/*mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
-    ]);
+    ]);*/
+
+
+
+    mix.react('resources/js/bootstrap.js', 'public/js/app.js')
+  .sass('resources/sass/app.scss', 'public/css')
+  .browserSync({
+    files: [
+      'public/js/**/*',
+      'public/css/**/*',
+    ],
+    proxy: `${MIX_PROXY_URL}`
+  });
+
+if (mix.inProduction()) {
+  mix.version();
+}
