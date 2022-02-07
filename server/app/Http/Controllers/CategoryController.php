@@ -8,10 +8,11 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-
 	public function index(Request $request){
         $query = Category::query();
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -19,17 +20,11 @@ class CategoryController extends Controller
             $query->whereLike('name', $name);
         }
 
-        return $query->paginate($results);
-    }
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
 
-        /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $query->paginate($results);
     }
 
     /**
@@ -58,17 +53,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -79,10 +63,7 @@ class CategoryController extends Controller
     {
         $category->update($request->all());
 
-        return response()->json([
-            'id' => $category->id,
-            'attributes' => $category
-        ]);
+        return $category;
     }
 
     /**
@@ -95,9 +76,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => '¡La categoría '.$category->name.' fue eliminada!'
-        ]);
+        return $category;
     }
 }
