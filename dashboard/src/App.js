@@ -28,10 +28,6 @@ import applications from './screens/applications';
 import categories from './screens/categories';
 import communities from './screens/communities';
 
-/*import List from './screens/categories/List';
-import Show from './screens/categories/Show';
-import Edit from './screens/categories/Edit';
-import Create from './screens/categories/Create';*/
 
 export default function App() {
   const { pathname } = location;
@@ -89,9 +85,6 @@ export default function App() {
       <Resource {...applications} />
       <Resource {...communities} />
       <Resource {...categories} />
-
-
-      //<Resource name="categories" list={List} create={Create} edit={Edit} />
 
     </Admin>
   );

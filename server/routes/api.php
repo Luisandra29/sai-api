@@ -41,7 +41,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user', 'AuthController@getUser');
     Route::post('update-password', 'UpdatePasswordController');
 
-    Route::resource('users', 'UserController')->only([
+   // Route::resource('users', 'UserController')->only([
+    Route::resource('user', 'UserController')->only([
+
         'index', 'destroy', 'update', 'show'
     ]);
 

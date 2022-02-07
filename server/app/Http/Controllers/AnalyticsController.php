@@ -15,7 +15,7 @@ class AnalyticsController extends Controller
     public function home()
     {
         $applications = Application::whereStateId(2)->count();
-        $users = User::with('profile')->count();
+        $users = User::get()->count();
         $categories = Category::withCount('applications')->get()->map(function ($value, $key) {
             return [
                 'name' => $value['name'],
