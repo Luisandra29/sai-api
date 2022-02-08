@@ -32,7 +32,7 @@ Route::resource('users', 'UserController');
 
 
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+// Route::group(['middleware' => ['auth:sanctum']], function () {
     function(Request $request) {
         return auth()->user();
     };
@@ -41,8 +41,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user', 'AuthController@getUser');
     Route::post('update-password', 'UpdatePasswordController');
 
-   // Route::resource('users', 'UserController')->only([
-    Route::resource('user', 'UserController')->only([
+    Route::resource('users', 'UserController')->only([
+    //Route::resource('user', 'UserController')->only([
 
         'index', 'destroy', 'update', 'show'
     ]);
@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
 
-});
+// });
 
 
 
