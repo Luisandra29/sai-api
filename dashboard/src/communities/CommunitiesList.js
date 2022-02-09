@@ -11,20 +11,20 @@ import {
 } from 'react-admin';
 import { useMediaQuery } from '@material-ui/core';
 
-const CategoriesFilter = props => (
+const CommunitiesFilter = props => (
   <Filter {...props}>
     <TextInput label="Nombre" source='name' />
   </Filter>
 );
 
-const CategoriesList = props => {
+const CommunitiesList = props => {
   const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   return (
     <List {...props}
-      title="Categorías"
+      title="Comunidades"
       bulkActionButtons={false}
-      filters={<CategoriesFilter />}
+      filters={<CommunitiesFilter />}
       exporter={false}
     >
       {
@@ -46,4 +46,4 @@ const CategoriesList = props => {
   );
 };
 
-export default CategoriesList;
+export default CommunitiesList;

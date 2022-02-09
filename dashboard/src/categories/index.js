@@ -1,11 +1,12 @@
 import CategoriesList from './CategoriesList'
 import CategoriesCreate from './CategoriesCreate'
 import CategoriesEdit from './CategoriesEdit'
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+
 
 export default {
     name: 'categories',
-    icon: ShoppingBasketIcon,
+    icon: LocalOfferIcon,
     list: CategoriesList,
     edit: CategoriesEdit,
     create: CategoriesCreate,

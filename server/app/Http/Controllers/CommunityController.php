@@ -18,12 +18,19 @@ class CommunityController extends Controller
     {
         $query = Community::query()->withCount('applications');
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
             $name = $filters['name'];
-            $query->whereLike('name', $name);
+            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
+
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
         }
 
         return $query->paginate($results);

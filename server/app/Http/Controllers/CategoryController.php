@@ -17,7 +17,7 @@ class CategoryController extends Controller
         if ($request->has('filter')) {
             $filters = $request->filter;
             $name = $filters['name'];
-            $query->whereLike('name', $name);
+            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
         }
 
         if ($sort && $order) {
