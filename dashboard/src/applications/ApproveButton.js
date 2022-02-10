@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRefresh, useNotify } from 'react-admin';
-//import { ButtonMenu } from '../../components';
+import { ButtonMenu } from '../components';
 import { Dialog } from 'mui-extra';
 import GradeIcon from '@material-ui/icons/Grade';
 import axios from 'axios';
@@ -29,7 +29,7 @@ export default function (props) {
   };
 
   return (<>
-    {/* <ButtonMenu
+    { <ButtonMenu
       label='Aprobar'
       icon={<GradeIcon />}
       onClick={() => {
@@ -37,7 +37,7 @@ export default function (props) {
         onClick();
       }}
       {...rest}
-    /> */}
+    /> }
 
     <Dialog
       fullWidth
