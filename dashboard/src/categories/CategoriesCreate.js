@@ -4,23 +4,23 @@ import {
     TextInput,
 } from 'react-admin';
   
-const validate = values => {
+const validate = (values) => {
     const errors = {};
-
+  
     if (!values.name) {
-        errors.name = "Ingrese el nombre del rubro";
+      errors.name = ['Ingrese un nombre.'];
     }
-
+  
     return errors;
-};
+  }
 
 const ItemCreate = props => (
-    <Create {...props}>
+    <Create {...props}  title='Nueva categoría'>
         <SimpleForm validate={validate} redirect='/categories'>
             <TextInput
-                label={false}
-                source="name"
-                placeholder="Ej. Avenida Libertad #217"
+                source='name'
+                label='Nombre'
+                placeholder="Nombre de la nueva categoría"
                 fullWidth
             />
         </SimpleForm>

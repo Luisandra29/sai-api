@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Application;
 
 
 class CategoryController extends Controller
 {
 	public function index(Request $request){
-        $query = Category::query();
+        $query = Category::query()->withCount('applications');
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
