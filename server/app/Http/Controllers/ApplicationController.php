@@ -23,6 +23,8 @@ class ApplicationController extends Controller
     public function index(Request $request)
     {
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
         $user = $request->user();
 
         $query = Application::withTrashed()
@@ -46,6 +48,11 @@ class ApplicationController extends Controller
                     return $query->whereListName($filters['status']);
                 });
             }
+
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
         }
 
         if ($request->get('type')) {

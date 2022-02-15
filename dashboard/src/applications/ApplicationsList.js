@@ -20,6 +20,7 @@ import {
 import { Tab, Tabs, Divider, useMediaQuery } from '@material-ui/core';
 import isEmpty from 'is-empty';
 import { useSelector } from 'react-redux';
+import { ModuleActions } from '../components';
 import MobileGrid from './MobileGrid';
 import ApproveButton from './ApproveButton';
 import DownloadButton from './DownloadButton';
@@ -143,6 +144,7 @@ const ApplicationsList = props => {
         </ListContextProvider>
       ) : (
         <div>
+          
           {filterValues.status === 'Pendientes' && (
             <ListContextProvider value={{ ...listContext, ids: selectedIds }}>
               <Datagrid {...props} optimized>
@@ -186,14 +188,20 @@ const ApplicationsList = props => {
 };
 
 
+const ApplicationsModuleActions = props => (
+  <ModuleActions {...props}>
+    <CreateButton basePath="applications" />
+  </ModuleActions>
+);
+
 
 export default function(props) {
   return (
     <List {...props}
       title="Solicitudes"
-      actions={<></>}
+      actions={<ApplicationsModuleActions {...props}/>}
       filterDefaultValues={{ status: 'Pendientes' }}
-      filters={null}
+      filters={<ApplicationsFilter />}
       bulkActionButtons={false}
     >
       <ApplicationsList />

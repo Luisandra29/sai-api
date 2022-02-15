@@ -15,7 +15,7 @@ const validate = values => {
 };
 
 const CategoriesEdit = props => (
-    <Edit {...props}>
+    <Edit {...props}  title='Actualizar categoría'>
         <SimpleForm validate={validate}>
             <TextInput
                 label={false}

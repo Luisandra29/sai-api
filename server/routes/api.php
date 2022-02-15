@@ -51,7 +51,9 @@ Route::resource('users', 'UserController');
     Route::resource('parishes', 'ParishController');
     Route::resource('communities', 'CommunityController');
     Route::post('categories/delete', 'CategoryController@deleteMany');
+    //Route::post('categories/create', 'CategoryController@store');
     Route::resource('categories', 'CategoryController');
+
 
 
     // Applications

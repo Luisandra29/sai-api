@@ -14,7 +14,7 @@ const validate = (values) => {
     return errors;
   }
 
-const ItemCreate = props => (
+const CategoriesCreate = props => (
     <Create {...props}  title='Nueva categoría'>
         <SimpleForm validate={validate} redirect='/categories'>
             <TextInput
@@ -27,4 +27,4 @@ const ItemCreate = props => (
     </Create>
 );
 
-export default ItemCreate;
+export default CategoriesCreate;
