@@ -41,8 +41,8 @@ const CommunitiesList = props => {
               <TextField source="name" label="Nombre"/>
               <ChipField  source='applications_count' label='Solicitudes' />
               <TextField source='parish_names' label='Parroquia (s)' />
-              <EditButton />
-              <DeleteButton />
+              {/* <EditButton />
+              <DeleteButton /> */}
           </Datagrid>
         )
       }

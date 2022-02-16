@@ -34,20 +34,29 @@ class ApplicationController extends Controller
         if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
-            if (array_key_exists('title', $filters)) {
-                $query->whereLike('title', $filters['title']);
-            }
-            if (array_key_exists('created_at', $filters)) {
-                $query->whereDate('created_at', $filters['created_at']);
-            }
-            if (array_key_exists('num', $filters)) {
-                $query->whereLike('num', $filters['num']);
-            }
             if (array_key_exists('status', $filters)) {
                 $query->whereHas('state', function ($query) use ($filters) {
                     return $query->whereListName($filters['status']);
                 });
             }
+            if (array_key_exists('title', $filters)) {
+                $query->where(strtolower('title'), 'ilike', '%'.$filters['title'].'%');
+
+            }
+            if (array_key_exists('created_at', $filters)) {
+                //$query->whereDate('created_at', $filters['created_at']);
+                $query->where(strtolower('created_at'), 'ilike', '%'.$filters['created_at'].'%');
+            }
+            if (array_key_exists('num', $filters)) {
+                $query->where(strtolower('num'), 'ilike', '%'.$filters['num'].'%');
+
+            }
+            if (array_key_exists('category', $filters)) {
+                $query->whereHas('category', function ($query) use ($filters) {
+                    $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
+                });
+            }
+
 
         }
 

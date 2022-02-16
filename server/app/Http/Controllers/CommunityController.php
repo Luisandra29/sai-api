@@ -27,6 +27,15 @@ class CommunityController extends Controller
             $name = $filters['name'];
             $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
 
+            // if (array_key_exists('parish_names', $filters)) {
+            //     $query->whereHas('category', function ($query) use ($filters) {
+            //         $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
+            //     });
+            // }
+
+            // $parish_name = $filters['parish_names'];
+            // $query->where(strtolower('parish_names'), 'ilike', '%'.$parish_name.'%');
+
         }
 
         if ($sort && $order) {
