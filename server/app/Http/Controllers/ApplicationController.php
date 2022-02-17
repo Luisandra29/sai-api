@@ -111,12 +111,25 @@ class ApplicationController extends Controller
             'parish_id' => $request->parish_id,
         ]);
         $category = $request->get('category_id');
-        $application = new Application($request->all());
-        $application->num = Application::getNewNum();
-        $application->state_id = 1;
-        $application->category_id = $category;
+        //$application = new Application($request->all());
+        $num = Application::getNewNum();
+        //$application->state_id = 1;
+        $category_id = $category;
+
+
+        $application = Application::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'quantity' => $request->quantity,
+            'num' => $num,
+            'category_id' => $category_id,
+            'state_id' => '1',
+            'person_id' => '1'
+
+        ]);
 
         $person->applications()->save($application);
+
 
         return response()->json([
             'success' => true,
