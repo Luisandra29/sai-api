@@ -2,27 +2,49 @@ import {
     Create,
     SimpleForm,
     TextInput,
+    ReferenceInput,
+    SelectArrayInput,
+    SelectInput,
 } from 'react-admin';
   
 const validate = values => {
     const errors = {};
 
-    if (!values.name) {
-        errors.name = "Ingrese el nombre del rubro";
+    if (!values.name || !values.name.trim()) {
+      errors.name = ['Ingrese un nombre.'];
     }
-
+  
+    if (!values.parishes) {
+      errors.parishes = ['Seleccione al menos una parroquia.'];
+    }
+  
     return errors;
 };
 
+// const parishes = [
+//     { id: 1, name: "BOLÍVAR" },
+//     { id: 2, name: "MACARAPANA" },
+//     { id: 3, name: "SANTA CATALINA" },
+//     { id: 4, name: "SANTA ROSA" },
+//     { id: 5, name: "SANTA TERESA" }
+//   ]
+
 const CommunityCreate = props => (
-    <Create {...props}>
+    <Create {...props} title='Nueva comunidad'>
         <SimpleForm validate={validate} redirect='/communities'>
-            <TextInput
-                label={false}
-                source="name"
-                placeholder="Ej. Avenida Libertad #217"
-                fullWidth
-            />
+            <TextInput source="name" label="Nombre" fullWidth />
+            {/* <SelectInput
+                      source="parishes"
+                      choices={"name"}
+                      label='Parroquia(s)'
+                      fullWidth
+                      options={{
+                        fullWidth: true
+                      }}
+                    /> */}
+             <ReferenceInput label="Parroquia(s)" source="parish_id" reference="parishes" allowEmpty allowNull format={(v) => (!v ? null : v)} >
+                <SelectInput optionText="name" optionValue="id"/>
+            </ReferenceInput>
         </SimpleForm>
     </Create>
 );

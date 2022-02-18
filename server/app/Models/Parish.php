@@ -13,7 +13,8 @@ class Parish extends Model
 
     protected $fillable = [ 'name' ];
 
-        public function communities()
+
+    public function communities()
     {
         return $this->belongsToMany(Community::class, 'community_parish');
     }

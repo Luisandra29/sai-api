@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Category;
 use App\Models\State;
 use App\Models\Person;
+use App\Models\Parish;
 use App\Http\Requests\CreateApplicationRequest;
 use Auth;
 use PDF;

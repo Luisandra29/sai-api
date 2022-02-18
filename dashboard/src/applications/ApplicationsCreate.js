@@ -162,8 +162,8 @@ const ApplicationsCreate = props => (
                     <Grid item xs={12} sm={12} md={4} className={classes.child}> */}
                       {/* <SelectInput label="Categoría" source="category_id" choices={choice}  optionValue="id" fullWidth/> */}
                     
-                      <ReferenceInput label="Categoría" source="category_id" reference="categories">
-                        <SelectInput optionText="name" />
+                      <ReferenceInput label="Categoría" source="category_id" reference="categories" allowEmpty allowNull format={(v) => (!v ? null : v)} >
+                        <SelectInput optionText="name" optionValue="id"/>
                       </ReferenceInput>
 {/*                     
                     </Grid>
@@ -171,7 +171,7 @@ const ApplicationsCreate = props => (
 
 
                     <Grid item xs={12} sm={12} md={4} className={classes.child}> */}
-                      <NumberInput source="quantity" label='Elementos requeridos' fullWidth/>
+                      {/* <NumberInput source="quantity" label='Elementos requeridos' fullWidth/> */}
                     {/* </Grid>
                   </Grid>
                 </div> */}
