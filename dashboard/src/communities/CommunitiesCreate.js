@@ -35,15 +35,15 @@ const CommunityCreate = props => (
             <TextInput source="name" label="Nombre" fullWidth />
             {/* <SelectInput
                       source="parishes"
-                      choices={"name"}
+                      choices={parishes}
                       label='Parroquia(s)'
                       fullWidth
                       options={{
                         fullWidth: true
                       }}
                     /> */}
-             <ReferenceInput label="Parroquia(s)" source="parish_id" reference="parishes" allowEmpty allowNull format={(v) => (!v ? null : v)} >
-                <SelectInput optionText="name" optionValue="id"/>
+             <ReferenceInput label="Parroquia(s)" source="parish_id" reference="parishes" >
+                <SelectInput optionText="name" optionValue="id" />
             </ReferenceInput>
         </SimpleForm>
     </Create>

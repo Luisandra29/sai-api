@@ -16,7 +16,7 @@ const i18nProvider = polyglotI18nProvider(() => spanishMessages, 'es');
 const App = () => {
   return (
     <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
-
+        <Resource name="parishes" />
         <Resource {...dashboard} />
         <Resource {...applications} />
         <Resource {...categories} />

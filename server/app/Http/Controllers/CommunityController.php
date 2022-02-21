@@ -21,26 +21,17 @@ class CommunityController extends Controller
         $sort = $request->sort;
         $order = $request->order;
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
-            // Get fields
-            $name = $filters['name'];
-            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
 
-            // if (array_key_exists('parish_names', $filters)) {
-            //     $query->whereHas('category', function ($query) use ($filters) {
-            //         $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
-            //     });
-            // }
+        // if ($request->has('filter')) {
+        //     $filters = $request->filter;
+        //     // Get fields
+        //     if (array_key_exists('status', $filters)) {
+        //         $query->whereHas('state', function ($query) use ($filters) {
+        //             return $query->whereListName($filters['status']);
+        //         });
+        //     }
 
-            // $parish_name = $filters['parish_names'];
-            // $query->where(strtolower('parish_names'), 'ilike', '%'.$parish_name.'%');
-
-        }
-
-        if ($sort && $order) {
-            $query->orderBy($sort, $order);
-        }
+        // }
 
         return $query->paginate($results);
 
@@ -51,10 +42,17 @@ class CommunityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Parish::get();
+        $query = Community::query()->withCount('applications');
+        $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
+
+        return $query->paginate($results);
+
     }
+
 
     /**
      * Store a newly created resource in storage.
