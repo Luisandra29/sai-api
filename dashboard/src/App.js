@@ -17,6 +17,7 @@ const App = () => {
   return (
     <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
         <Resource name="parishes" />
+        <Resource name="categorias" />
         <Resource {...dashboard} />
         <Resource {...applications} />
         <Resource {...categories} />

@@ -116,7 +116,7 @@ class ApplicationController extends Controller
         $num = Application::getNewNum();
         //$application->state_id = 1;
         $category_id = $category;
-
+        $person_id= $person->id;
 
         $application = Application::create([
             'title' => $request->title,
@@ -125,7 +125,8 @@ class ApplicationController extends Controller
             'num' => $num,
             'category_id' => $category_id,
             'state_id' => '1',
-            'person_id' => '1'
+            'person_id' => $person_id,
+            'quantity' => '3'
 
         ]);
 

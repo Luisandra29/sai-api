@@ -175,7 +175,7 @@ const ApplicationsCreate = props => (
                     <Grid item xs={12} sm={12} md={4} className={classes.child}> */}
                       {/* <SelectInput label="Categoría" source="category_id" choices={choice}  optionValue="id" fullWidth/> */}
                     
-                      <ReferenceInput label="Categoría" source="category_id" reference="categories" >
+                      <ReferenceInput label="Categoría" source="category_id" reference="categorias" >
                         <SelectInput optionText="name" optionValue="id"/>
                       </ReferenceInput>
 {/*                     

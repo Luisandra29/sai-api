@@ -28,6 +28,7 @@ class CreateApplicationsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('person_id')->references('id')->on('people')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamp('approved_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

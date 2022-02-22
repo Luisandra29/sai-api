@@ -5,9 +5,13 @@ import { Dialog } from 'mui-extra';
 import GradeIcon from '@material-ui/icons/Grade';
 import axios from 'axios';
 import isEmpty from 'is-empty';
-//import { apiURL } from '../../config';
+//import { apiURL } from '../config';
 
-const apiURL = `${window.location.origin}/api`;
+const apiURL =  'http://localhost:8000/api';
+
+
+
+
 export default function (props) {
   const { onClick, record, ...rest } = props;
   const [showDialog, setShowDialog] = React.useState(false);
@@ -32,7 +36,7 @@ export default function (props) {
     { <ButtonMenu
       label='Aprobar'
       icon={<GradeIcon />}
-      onClick={() => {
+      onClick={(e) => {
         handleClick();
         onClick();
       }}
