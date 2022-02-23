@@ -20,7 +20,7 @@ const CategoriesEdit = props => (
             <TextInput
                 label={false}
                 source="name"
-                placeholder="Ej. Avenida Libertad #217"
+                //placeholder="Ej. Avenida Libertad #217"
                 fullWidth
             />
         </SimpleForm>

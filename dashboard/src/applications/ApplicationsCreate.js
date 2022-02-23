@@ -14,6 +14,7 @@ import {
     useCreateController,
     CreateContextProvider,
     useRedirect,
+    Filter
 } from 'react-admin';
 import { useSelector } from 'react-redux';
 import isEmpty from 'is-empty';
@@ -77,6 +78,7 @@ const validate = values => {
 };
 
 
+
 // const choice = [
 //     { id: 1, name: 'Salud' },
 //     { id: 2, name: 'Servicios Funerarios'},
@@ -137,7 +139,7 @@ const ApplicationsCreate = props => (
           {/* { (isLoading)
             ? <Loading loadingPrimary="Cargando..." loadingSecondary="Cargando..." />
             : ( */}
-              <SimpleForm redirect='/applications'>
+              <SimpleForm validate={validate} redirect='/applications'>
 
               <Typography variant="subtitle1">
           Datos del solicitante
@@ -148,18 +150,21 @@ const ApplicationsCreate = props => (
         <TextInput source="address" label="Dirección" fullWidth />
         {/* <AutocompleteInput source="parish_id" label="Parroquia" choices={parishes} fullWidth /> */}
 
+
+        
         <ReferenceInput label="Parroquia" source="parish_id" reference="parishes">
           <SelectInput optionText="name" optionValue="id"/>
         </ReferenceInput>
 
         {/* <AutocompleteInput source="community_id" label="Comunidad" choices={communities} fullWidth /> */}
 
-        <ReferenceInput label="Comunidad" source="community_id" reference="communities" perPage={60} filter={{ parish_names: true }}>
-        {/* filterToQuery={searchText => ({ title: searchText })} */}
+        <ReferenceInput label="Comunidad" source="community_id" reference="communities" perPage={60}
+        filter={{ community_id: "1" }}
+        >
+        {/* filterToQuery={searchText => ({ parish_names: searchText })} */}
           
           <SelectInput optionText="name" optionValue="id"/>
         </ReferenceInput>
-
 
         <Typography variant="subtitle1">
           Datos de la solicitud
