@@ -89,8 +89,8 @@
             <div style="margin-bottom: 20px;text-align:left;">
                 <p>
                 CARÚPANO {{ $application->approved_at }}<br>
-                CIUDADANO(A): {{ $user->full_name }}<br>
-                C.I: {{ $user->dni }}<br>
+                CIUDADANO(A): {{ $person->name }}<br>
+                C.I: {{ $person->dni }}<br>
                 </p>
             </div>
 

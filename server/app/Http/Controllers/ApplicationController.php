@@ -182,7 +182,10 @@ class ApplicationController extends Controller
 
     public function download(Application $application)
     {
-        $pdf = PDF::loadView('pdf.certification', compact(['application']));
+
+        $person = Person::where('id' , $application->person_id)->first();
+        //$users = DB::table('users')->where('votes', 100)->get();
+        $pdf = PDF::loadView('pdf.certification', compact(['application', 'person']));
 
         return $pdf->download('certificado.pdf');
     }

@@ -5,7 +5,9 @@ import { ButtonMenu } from '../components';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import axios from 'axios';
 import isEmpty from 'is-empty';
-import { apiURL } from '../config';
+//import { apiURL } from '../config';
+
+const apiURL =  'http://localhost:8000/api';
 
 export default function (props) {
   const { onClick, record, ...rest } = props;
