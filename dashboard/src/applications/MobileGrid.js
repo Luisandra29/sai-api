@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card, CardHeader, CardContent, ButtonBase, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRedirect, TextField } from 'react-admin';
+import { useRedirect, TextField, RichTextField } from 'react-admin';
 import isEmpty from 'is-empty';
 import { useSelector } from 'react-redux';
 
@@ -30,6 +30,9 @@ const useListStyles = makeStyles(theme => ({
     alignItems: 'center',
     margin: '0.5rem 0',
   },
+  title: {
+    fontWeight: 'bold',
+  },
 }));
 
 const MobileGrid = ({ ids, data, basePath }) => {
@@ -50,7 +53,8 @@ const MobileGrid = ({ ids, data, basePath }) => {
                 <div className={classes.cardTitleContent}>
                   <span>
                     <Typography variant="title">
-                      {data[id].title}
+                      {/* {data[id].title} */}
+                      <RichTextField record={data[id]} source="title" className={classes.title}/>
                     </Typography>
                   </span>
                 </div>

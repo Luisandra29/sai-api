@@ -22,16 +22,19 @@ class CommunityController extends Controller
         $order = $request->order;
 
 
-        // if ($request->has('filter')) {
-        //     $filters = $request->filter;
-        //     // Get fields
-        //     if (array_key_exists('status', $filters)) {
-        //         $query->whereHas('state', function ($query) use ($filters) {
-        //             return $query->whereListName($filters['status']);
-        //         });
-        //     }
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+            // Get fields
+            if (array_key_exists('name', $filters)) {
+                $query->where(strtolower('name'), 'ilike', '%'.$filters['name'].'%');
 
-        // }
+            }
+
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
 
         return $query->paginate($results);
 

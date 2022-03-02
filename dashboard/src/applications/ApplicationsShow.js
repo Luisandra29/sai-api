@@ -8,7 +8,7 @@ import {
 } from 'react-admin';
 
 const ApplicationsTitle = ({ record   }) => (
-  <span>{record ? `${record.name}` : ''}</span>
+  <span>{record ? `${record.title}` : ''}</span>
 );
 
 const ApplicationsShow = (props) => {
