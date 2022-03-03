@@ -57,8 +57,6 @@ class ApplicationController extends Controller
                     $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
                 });
             }
-
-
         }
 
         if ($sort && $order) {

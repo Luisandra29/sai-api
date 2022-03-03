@@ -3,28 +3,13 @@ import {
     Create,
     SimpleForm,
     TextInput,
-    useCreate,
-    Title,
-    NumberInput,
     ReferenceInput,
-    SelectInput,
-    AutocompleteInput,
-    Loading,
-    useNotify,
-    useCreateController,
-    CreateContextProvider,
-    useRedirect,
-    Filter,
-    FormDataConsumer
+    SelectInput
 } from 'react-admin';
-import { useSelector } from 'react-redux';
-import isEmpty from 'is-empty';
 import { 
   Typography, 
   makeStyles
 } from '@material-ui/core';
-import { useFetch } from '../fetch';
-
 import { useFormState } from 'react-final-form';
 
 
@@ -80,6 +65,27 @@ const validate = values => {
 };
 
 
+const CommunitiesSelectInput = props => {
+  const { values } = useFormState();
+  console.log(values)
+  if (values.parish_id) {
+      return (
+        <ReferenceInput
+            source="community_id"
+            reference="communities"
+            label="Comunidades"
+            sort={{ field: 'id', order: 'ASC' }}
+            filter={{ parish_id: values.parish_id }}
+            fullWidth
+        >
+            <SelectInput source="name" />
+        </ReferenceInput>
+      )
+  }
+
+  return null;
+}
+
 const parishes = [
   { id: 1, name: "BOLÍVAR" },
   { id: 2, name: "MACARAPANA" },
@@ -89,151 +95,29 @@ const parishes = [
 ]
 
 
-// const countries = ['USA', 'UK', 'France'];
-const cities = {
-    BOLÍVAR: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
-    UK: ['London', 'Birmingham', 'Glasgow', 'Liverpool', 'Bristol'],
-    France: ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice'],
-};
-
-
-
-const toChoices = items => items.map(item => ({ id: item, name: item }));
-
-const CityInput = props => {
-    const { values } = useFormState();
-    return (
-        <SelectInput
-            choices={values.parishes ? toChoices(cities[values.parishes]) : []}
-            {...props}
-        />
-    );
-};
-
-
-
-
-// const communities = [
-  // {"id":1,"name":"CENTRO","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA, SANTA ROSA"},{"id":2,"name":"LOS MOLINOS","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":3,"name":"UVEROS","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":4,"name":"COPEY","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":5,"name":"COPACABANA","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":6,"name":"G\u00dcIRIA DE LA PLAYA","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":7,"name":"PATILLA","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":8,"name":"POZO COLORADO","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":9,"name":"GUATAPANARE","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":10,"name":"PLAYA GRANDE","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":11,"name":"LAS PEONIAS","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":12,"name":"HATO ROMAN","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":13,"name":"GUACA","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":14,"name":"LEBRANCHE","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"BOL\u00cdVAR"},{"id":15,"name":"EL MACO","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"MACARAPANA"},{"id":16,"name":"TAPARO","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"MACARAPANA"},{"id":17,"name":"URB. LA ESTANCIA","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"MACARAPANA"},{"id":18,"name":"JOS\u00c9 FRANCISCO BERM\u00daDEZ","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":19,"name":"LA VI\u00d1A","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":20,"name":"1\u00ba DE MAYO","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":21,"name":"GUAYAC\u00c1N DE LAS FLORES","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":22,"name":"CHARALLAVE","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":23,"name":"CANCHUNCH\u00da","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":24,"name":"LOMA DE GRAN POBRE","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"},{"id":25,"name":"EL CHARCAL","created_at":"2022-01-06T17:41:12.000000Z","updated_at":"2022-01-06T17:41:12.000000Z","applications_count":0,"parish_names":"SANTA CATALINA"}, { "id": 51, "name": "CLUB DE LEONES" }, { "id": 52, "name": "CHARALLAVE" }, { "id": 53, "name": "SAN MARTIN" }
-// ]
-
-// const ApplicationsCreate = props => (
-    
-//     <Create {...props}>
-//         <SimpleForm validate={validate} redirect='/applications'>
-//             <TextInput
-//                 label={false}
-//                 source="name"
-//                 placeholder="Ej. Avenida Libertad #217"
-//                 fullWidth
-//             />
-//         </SimpleForm>
-//     </Create>
-// );
-
-// export default ApplicationsCreate;
-
 
 const ApplicationsCreate = props => (
-    // const user = useSelector(store => store.user.user);
-    // const [create] = useCreate('applications');
-    // const classes = useStyles();
-    // const createControllerProps = useCreateController(props);
-    // //const { isLoading, response: data } = useFetch('applications/create');
-    // const notify = useNotify();
-    // const redirect = useRedirect();
-
-
-    // const handleSave = React.useCallback((values) => {
-        
-    //       onSuccess: (response) => {
-    //         const { data: res } = response;
-    //         notify(`¡Su solicitud ha sido enviada con éxito!`);
-    //         redirect('/home');
-    //       }
-    //   }, [create, notify, redirect]);
-
-      // return (
-        <Create {...props} title='Nueva Solicitud'>
-          {/* <Title title='Nueva solicitud' /> */}
-          {/* <Grid spacing={1}> */}
-          {/* { (isLoading)
-            ? <Loading loadingPrimary="Cargando..." loadingSecondary="Cargando..." />
-            : ( */}
-              <SimpleForm validate={validate} redirect='/applications'>
-
-              <Typography variant="subtitle1">
-          Datos del solicitante
-        </Typography>
-        <TextInput source="full_name" label="Nombre" fullWidth />
-        <TextInput source="dni" label="Cédula" fullWidth />
-        <TextInput source="phone" label="Teléfono" fullWidth />
-        <TextInput source="address" label="Dirección" fullWidth />
-        {/* <AutocompleteInput source="parish_id" label="Parroquia" choices={parishes} fullWidth /> */}
-
-
-
-
-
-
-
-
-        
-        {/* <ReferenceInput label="Parroquia" source="parish_id" reference="parishes">
-          <SelectInput optionText="name" optionValue="id"/>
-        </ReferenceInput> */}
-
-        {/* <AutocompleteInput source="community_id" label="Comunidad" choices={communities} fullWidth /> */}
-
-        {/* <ReferenceInput label="Comunidad" source="community_id" reference="communities" perPage={60}
-        filter={{ community_id: "1" }}
-        > */}
-
-        {/* filterToQuery={searchText => ({ parish_names: searchText })} */}
-          
-          {/* <SelectInput optionText="name" optionValue="id"/>
-        </ReferenceInput> */}
-
-
-            <SelectInput source="parishes.id" choices={parishes} />
-            <CityInput source="cities" />
-
-
-
-
-        <Typography variant="subtitle1">
-          Datos de la solicitud
-        </Typography>
-
-
-                {/* <div className={classes.root}>
-                  <Grid container className={classes.child}> */}
-                    <TextInput source="title" label="Título" multiline fullWidth />
-                    <TextInput source="description" label="Mensaje" multiline fullWidth />
-                  {/* </Grid>
-                  <Grid container>
-                    <Grid item xs={12} sm={12} md={4} className={classes.child}> */}
-                      {/* <SelectInput label="Categoría" source="category_id" choices={choice}  optionValue="id" fullWidth/> */}
-                    
-                      <ReferenceInput label="Categoría" source="category_id" reference="categorias" >
-                        <SelectInput optionText="name" optionValue="id"/>
-                      </ReferenceInput>
-{/*                     
-                    </Grid>
-
-
-
-                    <Grid item xs={12} sm={12} md={4} className={classes.child}> */}
-                      {/* <NumberInput source="quantity" label='Elementos requeridos' fullWidth/> */}
-                    {/* </Grid>
-                  </Grid>
-                </div> */}
-              </SimpleForm>
-            {/* ) */}
-          {/* } */}
-          {/* </Grid> */}
-        </Create>
-      // );
+  <Create {...props} title='Nueva Solicitud'>
+    <SimpleForm validate={validate} redirect='/applications'>
+      <Typography variant="subtitle1">
+        Datos del solicitante
+      </Typography>
+      <TextInput source="full_name" label="Nombre" fullWidth />
+      <TextInput source="dni" label="Cédula" fullWidth />
+      <TextInput source="phone" label="Teléfono" fullWidth />
+      <TextInput source="address" label="Dirección" fullWidth />
+      <SelectInput label="Parroquia" source="parish_id" choices={parishes} />
+      <CommunitiesSelectInput />
+      <Typography variant="subtitle1">
+        Datos de la solicitud
+      </Typography>
+      <TextInput source="title" label="Título" multiline fullWidth />
+      <TextInput source="description" label="Mensaje" multiline fullWidth />
+      <ReferenceInput label="Categoría" source="category_id" reference="categorias" >
+        <SelectInput optionText="name" optionValue="id"/>
+      </ReferenceInput>
+    </SimpleForm>
+  </Create>
 );
 
     export default ApplicationsCreate;
