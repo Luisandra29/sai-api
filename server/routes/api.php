@@ -42,8 +42,6 @@ Route::resource('users', 'UserController');
     Route::post('update-password', 'UpdatePasswordController');
 
     Route::resource('users', 'UserController')->only([
-    //Route::resource('user', 'UserController')->only([
-
         'index', 'destroy', 'update', 'show'
     ]);
 
@@ -51,8 +49,6 @@ Route::resource('users', 'UserController');
     Route::resource('parishes', 'ParishController');
     Route::resource('communities', 'CommunityController');
     Route::post('categories/delete', 'CategoryController@deleteMany');
-    //Route::post('categories/create', 'CategoryController@store');
-   // Route::get('categories/list', 'CategoryController@list');
 
     Route::resource('categories', 'CategoryController');
     Route::get('categorias', 'CategoriaController@index');

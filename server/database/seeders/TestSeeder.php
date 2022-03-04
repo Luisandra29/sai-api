@@ -20,15 +20,7 @@ class TestSeeder extends Seeder
      */
     public function run()
     {
-        //$people = factory(Person::class, 5)->create();
-
         $people = Person::factory()->count(5)->create();
-
-        /*factory(Application::class, 5)->create([
-            'category_id' => '1',
-            'state_id' => '1',
-            'person_id' => '1',
-        ]);*/
 
         Application::factory()->count(5)->create([
             'category_id' => '1',

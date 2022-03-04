@@ -12,12 +12,6 @@ import {
 import { useMediaQuery } from '@material-ui/core';
 import { Filter } from '../components';
 
-// const CommunitiesFilter = props => (
-//   <Filter {...props}>
-//     <TextInput label="Nombre" source='name' />
-//   </Filter>
-// );
-
 const CommunitiesList = props => {
   const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 

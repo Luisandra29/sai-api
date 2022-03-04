@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\State;
 use App\Models\Person;
 use App\Models\Parish;
-use App\Http\Requests\CreateApplicationRequest;
 use Auth;
 use PDF;
 use Mail;
@@ -30,7 +29,7 @@ class ApplicationController extends Controller
 
         $query = Application::withTrashed()
             ->latest()
-            ->with('category');
+            ->with('category', 'person');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -45,7 +44,6 @@ class ApplicationController extends Controller
 
             }
             if (array_key_exists('created_at', $filters)) {
-                //$query->whereDate('created_at', $filters['created_at']);
                 $query->where(strtolower('created_at'), 'ilike', '%'.$filters['created_at'].'%');
             }
             if (array_key_exists('num', $filters)) {
@@ -55,6 +53,26 @@ class ApplicationController extends Controller
             if (array_key_exists('category', $filters)) {
                 $query->whereHas('category', function ($query) use ($filters) {
                     $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
+                });
+            }
+            if (array_key_exists('person', $filters)) {
+                $query->whereHas('person', function ($query) use ($filters) {
+                    $query->where(strtolower('dni'), 'ilike', '%'.$filters['person'].'%');
+                });
+            }
+            if (array_key_exists('person_name', $filters)) {
+                $query->whereHas('person', function ($query) use ($filters) {
+                    $query->where(strtolower('name'), 'ilike', '%'.$filters['person_name'].'%');
+                });
+            }
+            if (array_key_exists('community_name', $filters)) {
+                $query->whereHas('person.community', function ($query) use ($filters) {
+                    $query->where(strtolower('name'), 'ilike', '%'.$filters['community_name'].'%');
+                });
+            }
+            if (array_key_exists('parish_name', $filters)) {
+                $query->whereHas('person.parish', function ($query) use ($filters) {
+                    $query->where(strtolower('name'), 'ilike', '%'.$filters['parish_name'].'%');
                 });
             }
         }
@@ -119,12 +137,10 @@ class ApplicationController extends Controller
         $application = Application::create([
             'title' => $request->title,
             'description' => $request->description,
-            'quantity' => $request->quantity,
             'num' => $num,
             'category_id' => $category_id,
             'state_id' => '1',
             'person_id' => $person_id,
-            'quantity' => '3'
 
         ]);
 

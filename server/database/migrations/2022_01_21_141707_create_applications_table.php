@@ -18,7 +18,6 @@ class CreateApplicationsTable extends Migration
             $table->string('num', 8);
             $table->string('title', 100);
             $table->string('description', 500);
-            $table->integer('quantity')->default(0);
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('person_id');

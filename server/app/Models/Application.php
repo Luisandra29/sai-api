@@ -18,7 +18,6 @@ class Application extends Model
         'title',
         'description',
         'num',
-        'quantity',
         'category_id',
         'state_id',
         'person_id',

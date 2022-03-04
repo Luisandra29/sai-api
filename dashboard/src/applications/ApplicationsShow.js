@@ -3,8 +3,6 @@ import {
   Show,
   TextField,
   SimpleShowLayout,
-  DateField,
-  NumberField
 } from 'react-admin';
 
 const ApplicationsTitle = ({ record   }) => (
