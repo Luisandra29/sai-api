@@ -58,12 +58,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $parishes = Parish::get();
-        $communities = Community::get();
+        $roles = Rol::get();
 
         return response()->json([
-            'parishes' => $parishes,
-            'communities' => $communities
+            'roles' => $roles
         ]);
     }
 
@@ -78,23 +76,24 @@ class UserController extends Controller
     {
         $password = Hash::make($request->password);
 
-        $person = Person::create([
-            'dni' => $request->dni,
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'community_id' => $request->community_id,
-            'parish_id' => $request->parish_id,
+        // $person = Person::create([
+        //     'dni' => $request->dni,
+        //     'name' => $request->name,
+        //     'address' => $request->address,
+        //     'phone' => $request->phone,
+        //     'community_id' => $request->community_id,
+        //     'parish_id' => $request->parish_id,
 
-        ]);
+        // ]);
 
-        $user = $person->user()->create([
+        $user = User::create([
             'email' => $request->email,
             'password' => $password,
             'activation_token' => Str::random(60),
-            'active' => false,
-            'role_id' => 3 // By default, users are guest
+            'active' => true,
+            'role_id' => $request->role,
         ]);
+
 
         $user->notify(new SignupActivate($user->activation_token));
 
@@ -111,14 +110,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /*public function show(User $user)
+    public function show(User $user)
     {
-        $query = $user->load([
-                'person.applications',
-            ])->loadCount('applications');
+        $query = $user->load('role');
 
         return Response($query);
-    }*/
+    }
 
 
     public function activate($token)
