@@ -14,7 +14,11 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        return Rol::get();
+        // return Rol::get();
+        $query = Rol::query();
+        $results = $request->perPage;
+
+        return $query->paginate($results);
     }
 
     /**

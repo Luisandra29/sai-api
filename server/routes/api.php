@@ -28,7 +28,7 @@ Route::get('activate-account/{token}', 'UserController@activate');
 
 Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
     ->name('parish.communities');
-Route::resource('users', 'UserController');
+// Route::resource('users', 'UserController');
 
 
 
@@ -41,9 +41,7 @@ Route::resource('users', 'UserController');
     Route::get('user', 'AuthController@getUser');
     Route::post('update-password', 'UpdatePasswordController');
 
-    Route::resource('users', 'UserController')->only([
-        'index', 'destroy', 'update', 'show'
-    ]);
+    Route::resource('users', 'UserController');
 
     Route::get('states', 'StateController');
     Route::resource('parishes', 'ParishController');
@@ -52,6 +50,8 @@ Route::resource('users', 'UserController');
 
     Route::resource('categories', 'CategoryController');
     Route::get('categorias', 'CategoriaController@index');
+    Route::get('roles', 'RoleController@index');
+
 
 
 

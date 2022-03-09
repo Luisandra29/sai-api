@@ -2,6 +2,7 @@ import {
     Create,
     SimpleForm,
     TextInput,
+    ReferenceInput,
     SelectInput,
     PasswordInput
 } from 'react-admin';
@@ -15,7 +16,7 @@ const validate = (values) => {
     if (!values.password) {
         errors.name = ['Ingrese una contraseña.'];
     }
-    if (!values.role) {
+    if (!values.role_id) {
         errors.name = ['Seleccione un rol.'];
     }
   
@@ -27,13 +28,13 @@ const choices = [
     { id: '2', name: 'Analista' },
   ];
 
-const CategoriesCreate = props => (
+const UsersCreate = props => (
     <Create {...props}  title='Nuevo Usuario'>
         <SimpleForm validate={validate} redirect='/users'>
             <TextInput
                 source='email'
                 label='Correo'
-                placeholder="Nombre de la nueva categoría"
+                placeholder="Ingrese Correo"
                 fullWidth
             />
             <PasswordInput
@@ -42,16 +43,11 @@ const CategoriesCreate = props => (
                     placeholder="Contraseña"
                     fullWidth
                 />
-            <SelectInput
-              source="role"
-              label='Rol'
-              choices={choices}
-              options={{
-                fullWidth: true
-              }}
-            />
+            <ReferenceInput label="Rol" source="role_id" reference="roles" >
+                <SelectInput optionText="name" optionValue="id" />
+            </ReferenceInput>
         </SimpleForm>
     </Create>
 );
 
-export default CategoriesCreate;
+export default UsersCreate;

@@ -24,6 +24,8 @@ const App = () => {
         <Resource {...communities} />
         <Resource name="parishes" />
         <Resource name="categorias" />
+        <Resource name="roles" />
+
     </Admin>
   )
 }

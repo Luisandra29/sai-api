@@ -3,7 +3,6 @@ import {
     SimpleForm,
     TextInput,
     ReferenceInput,
-    SelectArrayInput,
     SelectInput,
 } from 'react-admin';
   

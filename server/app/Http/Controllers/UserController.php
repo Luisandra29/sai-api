@@ -56,13 +56,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $roles = Rol::get();
 
-        return response()->json([
-            'roles' => $roles
-        ]);
+        $results = $request->perPage;
+        // return response()->json([
+        //     'roles' => $roles
+        // ]);
+        return $roles->paginate($results);
     }
 
         /**
@@ -72,7 +74,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(CreateUserRequest $request)
+    // public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
         $password = Hash::make($request->password);
 
@@ -85,17 +88,16 @@ class UserController extends Controller
         //     'parish_id' => $request->parish_id,
 
         // ]);
-
         $user = User::create([
             'email' => $request->email,
             'password' => $password,
             'activation_token' => Str::random(60),
             'active' => true,
-            'role_id' => $request->role,
+            'role_id' => $request->role_id,
         ]);
 
 
-        $user->notify(new SignupActivate($user->activation_token));
+        //$user->notify(new SignupActivate($user->activation_token));
 
         return response()->json([
             'success' => true,
@@ -118,26 +120,26 @@ class UserController extends Controller
     }
 
 
-    public function activate($token)
-    {
-        $user = User::where('activation_token', $token)->first();
+    // public function activate($token)
+    // {
+    //     $user = User::where('activation_token', $token)->first();
 
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡El usuario ya tiene una cuenta activa!'
-            ], 404);
-        }
+    //     if (!$user) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => '¡El usuario ya tiene una cuenta activa!'
+    //         ], 404);
+    //     }
 
-        $user->active = true;
-        $user->activation_token = '';
-        $user->save();
+    //     $user->active = true;
+    //     $user->activation_token = '';
+    //     $user->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => '¡Su cuenta ha sido activada!'
-        ]);
-    }
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => '¡Su cuenta ha sido activada!'
+    //     ]);
+    // }
 
 
     /**
@@ -160,12 +162,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update(['role_id' => $request->get('role_id')]);;
+        $user->update($request->all());
 
-        return response()->json([
-            'id' => $user->id,
-            'attributes' => $user
-        ]);
+        return $user;
     }
 
     /**
@@ -176,24 +175,26 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return $user;
     }
 
 
-    public function changeStatus(User $user)
-    {
-        $status = $user->active;
-        $user->active = !$status;
-        $user->save();
-        $message = 'desactivado';
+    // public function changeStatus(User $user)
+    // {
+    //     $status = $user->active;
+    //     $user->active = !$status;
+    //     $user->save();
+    //     $message = 'desactivado';
 
-        if (!$status) {
-            $message = 'activado';
-        }
+    //     if (!$status) {
+    //         $message = 'activado';
+    //     }
 
-        return response()->json([
-            'message' => 'El usuario '.$user->profile->fullName.' ha sido '.$message
-        ]);
-    }
+    //     return response()->json([
+    //         'message' => 'El usuario '.$user->profile->fullName.' ha sido '.$message
+    //     ]);
+    // }
 
 }

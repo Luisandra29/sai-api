@@ -15,11 +15,8 @@ const UsersShow = (props) => {
   return (
     <Show {...props} title={<UserTitle />}>
       <SimpleShowLayout>
-        <TextField source="profile.full_name" label="Nombre completo" />
-        <TextField source="profile.dni" label="Cédula" />
-        <TextField source="profile.address" label='Dirección' />
         <TextField source="email" label='Correo electrónico' />
-        <TextField source="applications_count" label='Solicitudes enviadas' />
+        <TextField source="role.name" label='Rol' />
       </SimpleShowLayout>
     </Show>
   );
