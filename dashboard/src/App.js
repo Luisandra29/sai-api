@@ -1,33 +1,35 @@
 import React from 'react';
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import { dataProvider } from './dataProvider'
-import spanishMessages from '@blackbox-vision/ra-language-spanish';
-import polyglotI18nProvider from 'ra-i18n-polyglot';
-
-import { Loading, Login, Layout } from './components';
-
-import dashboard from './dashboard'
-import categories from './categories'
-import communities from './communities'
-import applications from './applications'
-import users from './users'
-
-const i18nProvider = polyglotI18nProvider(() => spanishMessages, 'es');
+import { Switch, Route } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './layouts/Admin'
+import Login from './auth/Login'
+import UserList from './users/UsersList'
+import UserEdit from './users/UsersEdit'
 
 const App = () => {
-  return (
-    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
-        <Resource {...dashboard} />
-        <Resource {...applications} />
-        <Resource {...users} />
-        <Resource {...categories} />
-        <Resource {...communities} />
-        <Resource name="parishes" />
-        <Resource name="categorias" />
-        <Resource name="roles" />
+    return (
+        <Switch>
+            <Route exact path='/login' render={() => <Login />} />
 
-    </Admin>
-  )
+            {/**
+             * Users
+             */}
+            <ProtectedRoute layout={Layout} exact path='/users' component={(routeProps) =>
+                <UserList
+                    resource="users"
+                    basePath={routeProps.match.url}
+                />}
+            />
+            <ProtectedRoute layout={Layout} exact path='/users/:id' component={(routeProps) =>
+                <UserEdit
+                    resource="users"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+    )
 }
 
 export default App;

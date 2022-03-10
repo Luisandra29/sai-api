@@ -1,65 +1,58 @@
-export const logout = () => ({
-  type: 'LOGOUT'
+export const UNSET_DIALOG = 'UNSET_DIALOG';
+export const SET_DIALOG = 'SET_DIALOG';
+export const UNSET_TRIVIA = 'UNSET_TRIVIA';
+export const SET_TRIVIA = 'SET_TRIVIA';
+export const UNSET_USER = 'UNSET_USER';
+export const SET_USER = 'SET_USER'
+export const USER_FETCH_REQUESTED = 'USER_FETCH_REQUESTED'
+export const USER_FETCH_SUCCEEDED = 'USER_FETCH_SUCCEEDED'
+export const USER_FETCH_FAILED = 'USER_FETCH_FAILED'
+export const SET_SUBTHEMES = 'SET_SUBTHEMES';
+export const UNSET_SUBTHEMES = 'UNSET_SUBTHEMES';
+
+export const unsetSubtheme = data => ({
+    type: UNSET_SUBTHEMES,
+    payload: data
 });
 
-export const setUser = (user = {}) => ({
-  type: 'SET_USER',
-  payload: user
+export const setSubtheme = data => ({
+    type: SET_SUBTHEMES,
+    payload: data
 });
 
-export const fetchUser = id => ({
-  type: 'FETCH_USER',
-  payload: id
+export const unsetTrivia = () => ({
+    type: UNSET_TRIVIA
 });
 
-export const setNotifications = message => ({
-  type: 'SET_NOTIFICATIONS',
-  payload: message
+export const setTrivia = data => ({
+    type: SET_TRIVIA,
+    payload: data
 });
 
-export const clearNotifications = () => ({
-  type: 'CLEAR_NOTIFICATIONS'
+export const unsetUser = () => ({
+    type: UNSET_USER
 });
 
-export const setErrors = (errors = {}) => ({
-  type: 'SET_FORM_ERRORS',
-  payload: errors
+export const setUser = data => ({
+    type: SET_USER,
+    payload: data
 });
 
-export const clearErrors = () => ({
-  type: 'CLEAR_ERRORS'
+export const unsetDialog = (name) => ({
+    type: UNSET_DIALOG,
+    payload: name
 });
 
-export const updatePassword = data => ({
-  type: 'UPDATE_PASSWORD',
-  payload: data,
+export const setDialog = (name) => ({
+    type: SET_DIALOG,
+    payload: name
 });
 
-export const postData = (data, route) => ({
-  type: 'POST_DATA',
-  payload: data,
-  route: route
+export const fetchUser = () => ({
+    type: USER_FETCH_REQUESTED
 });
 
-export const getData = (route) => ({
-  type: 'GET_DATA',
-  route: route
+export const fetchUserSuccess = data => ({
+    type: USER_FETCH_SUCCEEDED,
+    payload: data
 });
-
-export const fetchSuccess = data => ({
-  type: 'SUCCESS',
-  payload: data
-});
-
-export const clearFetch = () => ({
-  type: 'CLEAR_FETCH'
-});
-
-export const fetchLoading = () => ({
-  type: 'LOADING'
-});
-
-export const clearAll = () => ({
-  type: 'CLEAR_ALL'
-});
-
