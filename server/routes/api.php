@@ -18,10 +18,7 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
-/**
- * Users
- */
-Route::post('login', 'AuthController@login');
+Route::post('login', 'LoginController@login');
 Route::post('recover-account', 'PasswordResetController@recover');
 Route::post('reset-password', 'PasswordResetController@resetPassword');
 Route::get('activate-account/{token}', 'UserController@activate');
