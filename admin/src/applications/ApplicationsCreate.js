@@ -2,13 +2,13 @@ import * as React from "react";
 import {
     Create,
     SimpleForm,
-    TextInput,
     ReferenceInput,
     SelectInput
 } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
 import { useFormState } from 'react-final-form';
-  
+import TextInput from '../components/TextInput'
+
 const validate = values => {
     const errors = {};
 
@@ -17,15 +17,15 @@ const validate = values => {
         errors.title = ['El máximo número de caracteres permitidos es 100.'];
       }
     }
-  
+
     if (!values.title || !values.title.trim()) {
       errors.title = ['Ingrese un título.'];
     }
-  
+
     if (!values.description || !values.description.trim()) {
       errors.description = ['Ingrese un asunto.'];
     }
-  
+
     if (values.description) {
       if (values.description.length > 500) {
         errors.description = ['El máximo número de caracteres permitidos es 500.'];
@@ -46,7 +46,7 @@ const validate = values => {
     if (!values.dni) {
       errors.dni = 'Ingrese la cédula de identidad';
     }
-  
+
     return errors;
 };
 

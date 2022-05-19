@@ -1,16 +1,16 @@
 import {
     Create,
-    SimpleForm,
-    TextInput,
+    SimpleForm
 } from 'react-admin';
-  
+import TextInput from '../components/TextInput'
+
 const validate = (values) => {
     const errors = {};
-  
+
     if (!values.name) {
-        errors.name = ['Ingrese un nombre.'];
+        errors.name = 'Ingrese un nombre.';
     }
-  
+
     return errors;
 }
 
@@ -18,7 +18,7 @@ const CategoriesCreate = props => (
     <Create {...props}  title='Nueva categoría'>
         <SimpleForm validate={validate} redirect='/categories'>
             <TextInput
-                source='name'
+                name='name'
                 label='Nombre'
                 placeholder="Nombre de la nueva categoría"
                 fullWidth

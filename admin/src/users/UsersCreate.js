@@ -1,32 +1,32 @@
 import {
     Create,
     SimpleForm,
-    TextInput,
     ReferenceInput,
     SelectInput,
     PasswordInput
 } from 'react-admin';
-  
+import TextInput from '../components/TextInput'
+
 const validate = (values) => {
     const errors = {};
-  
+
     if (!values.email) {
-      errors.name = ['Ingrese un correo.'];
+      errors.name = 'Ingrese un correo.';
     }
     if (!values.password) {
-        errors.name = ['Ingrese una contraseña.'];
+        errors.name = 'Ingrese una contraseña.';
     }
     if (!values.role_id) {
-        errors.name = ['Seleccione un rol.'];
+        errors.name = 'Seleccione un rol.';
     }
-  
+
     return errors;
 }
 
 const choices = [
     { id: '1', name: 'Admininistrador' },
     { id: '2', name: 'Analista' },
-  ];
+];
 
 const UsersCreate = props => (
     <Create {...props}  title='Nuevo Usuario'>
