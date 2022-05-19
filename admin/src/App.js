@@ -25,7 +25,6 @@ const App = () => (
 
             {/**
              * Users
-             */}
             <ProtectedRoute layout={Layout} exact path='/users' component={(routeProps) =>
                 <UserList
                     resource="users"
@@ -40,10 +39,10 @@ const App = () => (
                     {...routeProps}
                 />
             } />
+             */}
 
             {/**
              * Communities
-             */}
             <ProtectedRoute layout={Layout} exact path='/categories' component={(routeProps) =>
                 <CategoriesList
                     resource="communities"
@@ -58,17 +57,17 @@ const App = () => (
                     {...routeProps}
                 />
             } />
-            <ProtectedRoute layout={Layout} exact path='/categories/create' component={(routeProps) =>
-                <CategoriesCreate
-                    resource="users"
-                    basePath={routeProps.match.url}
-                    {...routeProps}
-                />
-            } />
+             */}
+
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/categories/create"
+                component={() => <CategoriesCreate />}
+            />
 
             {/**
-             * Communities
-             */}
+
             <ProtectedRoute layout={Layout} exact path='/communities' component={(routeProps) =>
                 <CommunitiesList
                     resource="communities"
@@ -90,10 +89,6 @@ const App = () => (
                     {...routeProps}
                 />
             } />
-
-            {/**
-             * Applications
-             */}
             <ProtectedRoute layout={Layout} exact path='/applications' component={(routeProps) =>
                 <ApplicationsList
                     resource="applications"
@@ -114,7 +109,7 @@ const App = () => (
                     basePath={routeProps.match.url}
                     {...routeProps}
                 />
-            } />
+            } /> */}
         </Switch>
     </>
 )
