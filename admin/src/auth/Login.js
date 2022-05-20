@@ -50,9 +50,9 @@ const Login = () => {
     const handleSubmit = React.useCallback(async (values) => {
         setLoading(true)
 
-        return await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/login`, values)
+        return await axios.post(`${process.env.REACT_APP_API_DOMAIN}/login`, values)
             .then(async (res) => {
-                await axios.get('/api/csrf-cookie')
+                await axios.get('/csrf-cookie')
                 await setUser({
                     user: res.data.user,
                     token: res.data.token

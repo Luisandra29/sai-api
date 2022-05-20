@@ -46,13 +46,13 @@ const App = () => (
              */}
             <ProtectedRoute layout={Layout} exact path='/categories' component={(routeProps) =>
                 <CategoriesList
-                    resource="communities"
+                    resource="categories"
                     basePath={routeProps.match.url}
                 />}
             />
             <ProtectedRoute layout={Layout} exact path='/categories/:id' component={(routeProps) =>
                 <CategoriesEdit
-                    resource="users"
+                    resource="categories"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}
@@ -60,7 +60,7 @@ const App = () => (
             } />
             <ProtectedRoute layout={Layout} exact path='/categories/create' component={(routeProps) =>
                 <CategoriesCreate
-                    resource="users"
+                    resource="categories"
                     basePath={routeProps.match.url}
                     {...routeProps}
                 />

@@ -23,7 +23,7 @@ function Analytics() {
         console.log(response.data);
       });
   }, []);
-    
+
   React.useEffect(() => {
     if (!isEmpty(data)) {
       let names = data.categories.map(item => item.name);
@@ -58,7 +58,7 @@ function Analytics() {
           />
         </Grid>
         </Grid>
-  
+
       <Grid container>
         <Grid item>
           <Chart
