@@ -13,8 +13,8 @@ const ApplicationsShow = (props) => {
   return (
     <Show {...props} title={<ApplicationsTitle />}>
       <SimpleShowLayout>
-        <TextField source="title" label="Asunto" />
-        <TextField source="description" label="Mensaje" />
+        <TextField source="title" label="Observación" />
+        <TextField source="description" label="Descripción" />
         <TextField source="category.name" label='Categoría' />
         <TextField source="state.name" label='Estado' />
         <TextField source="created_at" label="Enviada" />
