@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CommunitiesSeeder::class);
         $this->call(CommunityParishSeeder::class);
         $this->call(CategoriesSeeder::class);
+        $this->call(SubategoriesSeeder::class);
+
 
         if (App::environment() == 'production') {
            $this->call(AdminSeeder::class);

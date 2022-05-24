@@ -13,6 +13,7 @@ class CategoryController extends Controller
 {
 	public function index(Request $request){
         $query = Category::query()->withCount('applications');
+
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
@@ -51,8 +52,11 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return $category->load(['applications'])
-            ->loadCount('applications');
+        return $category->load(['applications'])->loadCount('applications');
+
+
+        //return response($category->load('applications', 'subcategories'));
+
     }
 
     /**

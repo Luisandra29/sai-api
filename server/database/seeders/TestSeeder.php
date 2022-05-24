@@ -22,7 +22,7 @@ class TestSeeder extends Seeder
     {
         $people = Person::factory()->count(5)->create();
 
-        Application::factory()->count(5)->create([
+        /*Application::factory()->count(5)->create([
             'category_id' => '1',
             'state_id' => '1',
             'person_id' => '1',
@@ -39,7 +39,7 @@ class TestSeeder extends Seeder
             'category_id' => '4',
             'state_id' => '3',
             'person_id' => '4',
-        ]);
+        ]);*/
 
         // Admin user
         $admin = Person::create([

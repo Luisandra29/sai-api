@@ -29,7 +29,7 @@ class ApplicationController extends Controller
 
         $query = Application::withTrashed()
             ->latest()
-            ->with('category', 'person');
+            ->with('person', 'subcategory');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -86,6 +86,7 @@ class ApplicationController extends Controller
         }
 
         return $query->paginate($results);
+
     }
 
     public function report($query)
@@ -127,18 +128,18 @@ class ApplicationController extends Controller
             'community_id' => $request->community_id,
             'parish_id' => $request->parish_id,
         ]);
-        $category = $request->get('category_id');
+        $subcategory = $request->get('subcategory_id');
         //$application = new Application($request->all());
         $num = Application::getNewNum();
         //$application->state_id = 1;
-        $category_id = $category;
+        $subcategory_id = $subcategory;
         $person_id= $person->id;
 
         $application = Application::create([
             'title' => $request->title,
             'description' => $request->description,
             'num' => $num,
-            'category_id' => $category_id,
+            'subcategory_id' => $subcategory_id,
             'state_id' => '1',
             'person_id' => $person_id,
 
@@ -161,7 +162,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return Response($application->load(['category', 'state', 'person']));
+        return Response($application->load(['subcategory', 'state', 'person']));
     }
 
     /**

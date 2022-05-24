@@ -43,12 +43,13 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
     Route::get('states', 'StateController');
     Route::resource('parishes', 'ParishController');
     Route::resource('communities', 'CommunityController');
-    Route::post('categories/delete', 'CategoryController@deleteMany');
+    //Route::post('categories/delete', 'CategoryController@deleteMany');
 
     Route::resource('categories', 'CategoryController');
-    Route::get('categorias', 'CategoriaController@index');
+    //Route::get('categorias', 'CategoriaController@index');
     Route::get('roles', 'RoleController@index');
 
+    Route::resource('subcategories', 'SubcategoryController');
 
 
 

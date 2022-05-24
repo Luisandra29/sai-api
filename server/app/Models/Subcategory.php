@@ -11,10 +11,14 @@ class Subcategory extends Model
 
     protected $table = 'subcategories';
 
-    protected $fillable = [ 'name' ];
+    protected $fillable = [ 'name', 'category_id' ];
+
+    protected $appends = [
+        'category'
+    ];
 
 
-    public function categories()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
@@ -23,4 +27,11 @@ class Subcategory extends Model
     {
         return $this->hasMany(Application::class);
     }
+
+
+    public function getCategoryAttribute()
+    {
+        $this->load('category');
+    }
+
 }

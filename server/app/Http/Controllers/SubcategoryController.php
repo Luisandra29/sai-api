@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subcategory;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateSubcategoryRequest;
+use App\Http\Requests\UpdateSubcategoryRequest;
+
+
 
 class SubcategoryController extends Controller
 {
@@ -12,20 +17,27 @@ class SubcategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request){
+        $query = Subcategory::query()->withCount('applications');
+
+        $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+            $name = $filters['name'];
+            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
+
+        return $query->paginate($results);
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +45,11 @@ class SubcategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSubcategoryRequest $request)
     {
-        //
+        $subcategory = Subcategory::create($request->all());
+
+        return $subcategory;
     }
 
     /**
@@ -46,7 +60,8 @@ class SubcategoryController extends Controller
      */
     public function show(Subcategory $subcategory)
     {
-        //
+        return $subcategory->load(['applications'])
+        ->loadCount('applications');
     }
 
     /**
@@ -67,9 +82,11 @@ class SubcategoryController extends Controller
      * @param  \App\Models\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subcategory $subcategory)
+    public function update(UpdateSubcategoryRequest $request, Subcategory $subcategory)
     {
-        //
+        $subcategory->update($request->all());
+
+        return $subcategory;
     }
 
     /**
@@ -80,6 +97,8 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
-        //
+        $subcategory->delete();
+
+        return $subcategory;
     }
 }
