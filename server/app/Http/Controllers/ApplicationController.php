@@ -120,14 +120,14 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        $person = Person::create([
-            'dni' => $request->dni,
-            'name' => $request->full_name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'community_id' => $request->community_id,
-            'parish_id' => $request->parish_id,
-        ]);
+        // $person = Person::create([
+        //     'dni' => $request->dni,
+        //     'name' => $request->full_name,
+        //     'address' => $request->address,
+        //     'phone' => $request->phone,
+        //     'community_id' => $request->community_id,
+        //     'parish_id' => $request->parish_id,
+        // ]);
         $subcategory = $request->get('subcategory_id');
         //$application = new Application($request->all());
         $num = Application::getNewNum();

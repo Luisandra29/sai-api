@@ -33,20 +33,21 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
 
-        $user->profile()->create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => $password,
-            'address' => $request->get('address'),
-            'dni' => $identification,
+        $person = Person::create([
+            'dni' => $request->dni,
+            'name' => $request->full_name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'community_id' => $request->community_id,
+            'parish_id' => $request->parish_id,
+            'sector_id' => $request->community_id,
+            'parish_id' => $request->parish_id,
         ]);
 
-        return response()->json([
-            'message' => '¡Perfil actualizado!'
-        ]);
+        return $person;
     }
 
     /**

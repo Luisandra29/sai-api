@@ -46,32 +46,36 @@ class TestSeeder extends Seeder
             'name' => 'Jesús Ordosgoitty',
             'community_id' => 1,
             'parish_id' => 1,
+            'sector_id' => 1,
+            'street_id' => 1,
             'address' => 'Ave. Libertad 123',
             'dni' => '27572434',
         ]);
-        User::create([
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('qwerty123'),
-            'role_id' => 1,
-            'active' => true,
-            'activation_token' => Str::random(60),
-        ]);
+        // User::create([
+        //     'email' => 'admin@admin.com',
+        //     'password' => bcrypt('qwerty123'),
+        //     'role_id' => 1,
+        //     'active' => true,
+        //     'activation_token' => Str::random(60),
+        // ]);
 
         // Analyst user
         $analyst = Person::create([
             'name' => 'Andreina Santana',
             'community_id' => 1,
             'parish_id' => 1,
+            'sector_id' => 1,
+            'street_id' => 1,
             'address' => 'Ave. Libertad 123',
             'dni' => 'V-26292605',
         ]);
-        $analyst = User::create([
-            'email' => 'analista@gmail.com',
-            'password' => bcrypt('qwerty123'),
-            'role_id' => 2,
-            'active' => true,
-            'activation_token' => Str::random(60),
-        ]);
+        // $analyst = User::create([
+        //     'email' => 'analista@gmail.com',
+        //     'password' => bcrypt('qwerty123'),
+        //     'role_id' => 2,
+        //     'active' => true,
+        //     'activation_token' => Str::random(60),
+        // ]);
 
     }
 }
