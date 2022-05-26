@@ -20,6 +20,11 @@ class Community extends Model
         return $this->belongsToMany(Parish::class, 'community_parish');
     }
 
+    public function sectors()
+    {
+        return $this->hasMany(Sector::class);
+    }
+
     public function applications()
     {
         return $this->hasManyThrough(Application::class, Person::class);

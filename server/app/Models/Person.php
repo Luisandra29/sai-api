@@ -19,7 +19,7 @@ class Person extends Model
 
     public function getFullAddressAttribute()
     {
-        return "{$this->parish->name}, {$this->community->name}, {$this->address}";
+        return "{$this->parish->name}, {$this->community->name}, {$this->sector->name}, {$this->street->name}, {$this->address}";
     }
 
     public function parish()

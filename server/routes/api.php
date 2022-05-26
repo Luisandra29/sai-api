@@ -43,6 +43,8 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
     Route::get('states', 'StateController');
     Route::resource('parishes', 'ParishController');
     Route::resource('communities', 'CommunityController');
+    Route::resource('sectors', 'SectorController');
+    Route::resource('streets', 'StreetController');
     //Route::post('categories/delete', 'CategoryController@deleteMany');
 
     Route::resource('categories', 'CategoryController');
@@ -52,6 +54,8 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
     Route::resource('subcategories', 'SubcategoryController');
 
 
+    //People
+    Route::resource('people', 'PersonController');
 
     // Applications
     Route::resource('applications', 'ApplicationController');

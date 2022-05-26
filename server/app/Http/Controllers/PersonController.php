@@ -12,9 +12,25 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Person::query()->withCount('applications');
+
+        $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+            $name = $filters['name'];
+            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -38,13 +54,13 @@ class PersonController extends Controller
 
         $person = Person::create([
             'dni' => $request->dni,
-            'name' => $request->full_name,
+            'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
             'community_id' => $request->community_id,
             'parish_id' => $request->parish_id,
-            'sector_id' => $request->community_id,
-            'parish_id' => $request->parish_id,
+            'sector_id' => $request->sector_id,
+            'street_id' => $request->street_id,
         ]);
 
         return $person;
@@ -53,21 +69,22 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Profile  $profile
+     * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function show(Profile $profile)
+    public function show(Person $person)
     {
-        //
+        return $person->load(['applications'])
+        ->loadCount('applications');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Profile  $profile
+     * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profile $profile)
+    public function edit(Person $person)
     {
         //
     }
@@ -76,22 +93,26 @@ class PersonController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
+     * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, Person $person)
     {
-        //
+        $person->update($request->all());
+
+        return $person;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Profile  $profile
+     * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profile $profile)
+    public function destroy(Person $person)
     {
-        //
+        $person->delete();
+
+        return $person;
     }
 }

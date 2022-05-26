@@ -13,7 +13,10 @@ class Sector extends Model
 
     protected $fillable = [ 'name','community_id' ];
 
-    public function communities()
+    protected $appends = ['community_names'];
+
+
+    public function community()
     {
         return $this->belongsTo(Community::class);
     }
@@ -21,5 +24,22 @@ class Sector extends Model
     public function streets()
     {
         return $this->belongsToMany(Street::class, 'street_sector');
+    }
+
+    public function people()
+    {
+        return $this->hasMany(Person::class);
+    }
+
+    public function applications()
+    {
+        return $this->hasManyThrough(Application::class, Person::class);
+    }
+
+    public function getCommunityNamesAttribute()
+    {
+        return $this->community()->get()->implode('name', ', ');
+
+        //$this->load('communities');
     }
 }
