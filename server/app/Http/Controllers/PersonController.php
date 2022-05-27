@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Person;
+use App\Models\Application;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller
@@ -51,7 +52,6 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-
         $person = Person::create([
             'dni' => $request->dni,
             'name' => $request->name,
@@ -115,4 +115,5 @@ class PersonController extends Controller
 
         return $person;
     }
+
 }

@@ -19,6 +19,7 @@ class ApplicationsSeeder extends Seeder
             'subcategory_id' => '1',
             'state_id' => '1',
             'person_id' => '1',
+            'user_id' => '1',
         ]);
 
 
@@ -26,12 +27,14 @@ class ApplicationsSeeder extends Seeder
             'subcategory_id' => '2',
             'state_id' => '2',
             'person_id' => '3',
+            'user_id' => '1',
         ]);
 
         Application::factory()->count(5)->create([
             'subcategory_id' => '3',
             'state_id' => '3',
             'person_id' => '4',
+            'user_id' => '1',
         ]);
     }
 }

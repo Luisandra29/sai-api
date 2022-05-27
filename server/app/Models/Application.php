@@ -18,9 +18,11 @@ class Application extends Model
         'title',
         'description',
         'num',
+        'quantity',
         'subcategory_id',
         'state_id',
         'person_id',
+        'user_id',
         'approved_at'
     ];
 
@@ -28,6 +30,11 @@ class Application extends Model
     public function person()
     {
         return $this->belongsTo(Person::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function state()
@@ -39,7 +46,6 @@ class Application extends Model
     {
         return $this->belongsTo(Subcategory::class);
     }
-
 
     public function getApprovedAtAttribute($value)
     {

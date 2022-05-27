@@ -29,7 +29,7 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
 
 
 
-// Route::group(['middleware' => ['auth:sanctum']], function () {
+ Route::group(['middleware' => ['auth:sanctum']], function () {
     function(Request $request) {
         return auth()->user();
     };
@@ -71,7 +71,7 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
 
 
 
-// });
+ });
 
 
 

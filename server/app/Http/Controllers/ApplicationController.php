@@ -29,7 +29,7 @@ class ApplicationController extends Controller
 
         $query = Application::withTrashed()
             ->latest()
-            ->with('person', 'subcategory');
+            ->with('person', 'subcategory', 'user');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -120,33 +120,21 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        // $person = Person::create([
-        //     'dni' => $request->dni,
-        //     'name' => $request->full_name,
-        //     'address' => $request->address,
-        //     'phone' => $request->phone,
-        //     'community_id' => $request->community_id,
-        //     'parish_id' => $request->parish_id,
-        // ]);
-        $subcategory = $request->get('subcategory_id');
-        //$application = new Application($request->all());
         $num = Application::getNewNum();
-        //$application->state_id = 1;
-        $subcategory_id = $subcategory;
-        $person_id= $person->id;
 
-        $application = Application::create([
+        $user_id = Auth::user()->id;
+        Application::create([
             'title' => $request->title,
             'description' => $request->description,
             'num' => $num,
-            'subcategory_id' => $subcategory_id,
+            'quantity' => $request->quantity,
+            'subcategory_id' => $request->subcategory_id,
             'state_id' => '1',
-            'person_id' => $person_id,
-
+            'person_id' => $request->person_id,
+            'user_id' => $user_id
         ]);
 
-        $person->applications()->save($application);
-
+        //$person->applications()->save($application);
 
         return response()->json([
             'success' => true,
