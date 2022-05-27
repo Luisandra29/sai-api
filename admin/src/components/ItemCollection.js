@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { makeStyles, Box, fade } from '@material-ui/core';
+import { makeStyles, Box, alpha } from '@material-ui/core';
 import Tag from './Tag'
 
 const useStyles = makeStyles(theme => ({

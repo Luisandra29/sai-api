@@ -11,9 +11,9 @@ import InputContainer from '../components/InputContainer'
 import AuthLayout from '../layouts/AuthLayout'
 import formStyles from '../styles/formStyles'
 import { Link, useHistory } from 'react-router-dom'
-import { PasswordInput } from 'react-admin'
 import { useUserDispatch } from '../hooks/useUserState'
 import TextInput from '../components/TextInput'
+import PasswordInput from '../components/PasswordInput'
 
 const validate = (values) => {
     const errors = {};
@@ -76,13 +76,12 @@ const Login = () => {
         <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
             <div className={classes.form}>
                 <Box className={classes.cardHeader}>
-                    <img src={`${process.env.PUBLIC_URL}/logotipo.png`} alt='approbado_logotipo' height="50px" width="200px" />
                     <Typography variant="subtitle1" classKey='p'>
-                        Administrador
+                        Sistema de Atención Integral
                     </Typography>
                 </Box>
 
-                <InputContainer labelName='Correo electrónico' md={12}>
+                <InputContainer label='Correo electrónico' md={12}>
                     <TextInput
                         name="email"
                         placeholder="Ingrese su correo electrónico"
@@ -90,9 +89,9 @@ const Login = () => {
                         fullWidth
                     />
                 </InputContainer>
-                <InputContainer labelName='Contraseña' md={12}>
+                <InputContainer label='Contraseña' md={12}>
                     <PasswordInput
-                        source="password"
+                        name="password"
                         placeholder="Ingrese su contraseña"
                         disabled={loading}
                         fullWidth
