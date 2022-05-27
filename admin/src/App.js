@@ -13,7 +13,6 @@ import CategoriesList from './categories/CategoriesList'
 import CategoriesEdit from './categories/CategoriesEdit'
 import CategoriesCreate from './categories/CategoriesCreate'
 import ApplicationsList from './applications/ApplicationsList'
-import ApplicationsCreate from './applications/ApplicationsCreate'
 import ApplicationsShow from './applications/ApplicationsShow'
 
 const App = () => (
@@ -45,13 +44,13 @@ const App = () => (
              * Communities
             <ProtectedRoute layout={Layout} exact path='/categories' component={(routeProps) =>
                 <CategoriesList
-                    resource="communities"
+                    resource="categories"
                     basePath={routeProps.match.url}
                 />}
             />
             <ProtectedRoute layout={Layout} exact path='/categories/:id' component={(routeProps) =>
                 <CategoriesEdit
-                    resource="users"
+                    resource="categories"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}

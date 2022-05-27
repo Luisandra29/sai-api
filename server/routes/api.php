@@ -29,7 +29,7 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
 
 
 
-// Route::group(['middleware' => ['auth:sanctum']], function () {
+ Route::group(['middleware' => ['auth:sanctum']], function () {
     function(Request $request) {
         return auth()->user();
     };
@@ -43,14 +43,19 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
     Route::get('states', 'StateController');
     Route::resource('parishes', 'ParishController');
     Route::resource('communities', 'CommunityController');
-    Route::post('categories/delete', 'CategoryController@deleteMany');
+    Route::resource('sectors', 'SectorController');
+    Route::resource('streets', 'StreetController');
+    //Route::post('categories/delete', 'CategoryController@deleteMany');
 
     Route::resource('categories', 'CategoryController');
-    Route::get('categorias', 'CategoriaController@index');
+    //Route::get('categorias', 'CategoriaController@index');
     Route::get('roles', 'RoleController@index');
 
+    Route::resource('subcategories', 'SubcategoryController');
 
 
+    //People
+    Route::resource('people', 'PersonController');
 
     // Applications
     Route::resource('applications', 'ApplicationController');
@@ -66,7 +71,7 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
 
 
 
-// });
+ });
 
 
 

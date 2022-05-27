@@ -10,8 +10,6 @@ import { axios } from '../providers'
 import InputContainer from '../components/InputContainer'
 import AuthLayout from '../layouts/AuthLayout'
 import formStyles from '../styles/formStyles'
-import { theme } from '../styles';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
 import { PasswordInput } from 'react-admin'
 import { useUserDispatch } from '../hooks/useUserState'
@@ -51,9 +49,9 @@ const Login = () => {
     const handleSubmit = React.useCallback(async (values) => {
         setLoading(true)
 
-        return await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/login`, values)
+        return await axios.post(`${process.env.REACT_APP_API_DOMAIN}/login`, values)
             .then(async (res) => {
-                await axios.get('/api/csrf-cookie')
+                await axios.get('/csrf-cookie')
                 await setUser({
                     user: res.data.user,
                     token: res.data.token
@@ -113,10 +111,4 @@ const Login = () => {
     );
 };
 
-const LoginWithTheme = props => (
-    <ThemeProvider theme={createMuiTheme(theme)}>
-        <Login {...props} />
-    </ThemeProvider>
-);
-
-export default LoginWithTheme;
+export default Login;

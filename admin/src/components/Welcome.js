@@ -16,8 +16,9 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Welcome({ title }) {
+export function Welcome({ title }) {
   const classes = useStyles();
+
 
   return (
     <Card className={classes.welcome} spacing={5}>
@@ -29,4 +30,5 @@ export default function Welcome({ title }) {
     </Card>
   );
 };
+
 

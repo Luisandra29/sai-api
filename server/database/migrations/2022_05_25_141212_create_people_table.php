@@ -15,16 +15,22 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->nullable();
-            $table->string('name')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('dni');
+            $table->string('name');
+            $table->string('address');
+            $table->string('phone');
             $table->timestamps();
-            $table->unsignedBigInteger('community_id');
             $table->unsignedBigInteger('parish_id');
+            $table->unsignedBigInteger('community_id');
+            $table->unsignedBigInteger('sector_id');
+            $table->unsignedBigInteger('street_id');
+            $table->foreign('parish_id')->references('id')->on('parishes')
+            ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('community_id')->references('id')->on('communities')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('parish_id')->references('id')->on('parishes')
+            $table->foreign('sector_id')->references('id')->on('sectors')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('street_id')->references('id')->on('streets')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

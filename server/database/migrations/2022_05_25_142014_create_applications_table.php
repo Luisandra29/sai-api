@@ -18,14 +18,18 @@ class CreateApplicationsTable extends Migration
             $table->string('num', 8);
             $table->string('title', 100);
             $table->string('description', 500);
-            $table->unsignedBigInteger('category_id');
+            $table->integer('quantity')->nullable();
+            $table->unsignedBigInteger('subcategory_id');
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('person_id');
-            $table->foreign('category_id')->references('id')->on('categories')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('person_id')->references('id')->on('people')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('approved_at')->nullable();
             $table->softDeletes();

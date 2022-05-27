@@ -24,13 +24,15 @@ class DatabaseSeeder extends Seeder
         $this->call(CommunitiesSeeder::class);
         $this->call(CommunityParishSeeder::class);
         $this->call(CategoriesSeeder::class);
+        $this->call(SubcategoriesSeeder::class);
 
-        if (App::environment() == 'production') {
+
+        // if (App::environment() == 'production') {
            $this->call(AdminSeeder::class);
-        }
+        // }
 
-        if (App::environment() == 'local') {
-            $this->call(TestSeeder::class);
-        }
+        // if (App::environment() == 'local') {
+        //     $this->call(TestSeeder::class);
+        // }
     }
 }
