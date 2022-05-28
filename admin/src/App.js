@@ -3,17 +3,8 @@ import { Switch, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './layouts/Admin'
 import Login from './auth/Login'
-import UserList from './users/UsersList'
-import UserEdit from './users/UsersEdit'
 import Dashboard from './dashboard'
-import CommunitiesList from './communities/CommunitiesList'
-import CommunitiesEdit from './communities/CommunitiesEdit'
-import CommunitiesCreate from './communities/CommunitiesCreate'
-import CategoriesList from './categories/CategoriesList'
-import CategoriesEdit from './categories/CategoriesEdit'
 import CategoriesCreate from './categories/CategoriesCreate'
-import ApplicationsList from './applications/ApplicationsList'
-import ApplicationsShow from './applications/ApplicationsShow'
 
 const App = () => (
     <>

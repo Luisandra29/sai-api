@@ -5,7 +5,7 @@ import categoriesValidations from './categoriesValidations'
 import { axios, history } from '../providers'
 import InputContainer from '../components/InputContainer'
 
-const CategoriesCreate = props => {
+const CategoriesCreate = () => {
     const [loading, setLoading] = React.useState(false)
 
     const handleSubmit = React.useCallback(async (values) => {

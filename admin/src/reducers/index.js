@@ -1,9 +1,9 @@
 import dialogReducer from './dialogReducer';
-import triviaReducer from './triviaReducer';
 import userReducer from './userReducer';
+import sidebarReducer from './sidebarReducer';
 
 export default {
     user: userReducer,
     dialog: dialogReducer,
-    trivia: triviaReducer
+    sidebar: sidebarReducer
 };

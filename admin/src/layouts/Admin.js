@@ -1,16 +1,15 @@
-import { Sidebar } from 'react-admin';
 import Menu from './Menu';
 import MenuItems from './MenuItems';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from './AppBar';
-import Notification from '../components/Notification'
+import Sidebar from './Sidebar'
 
-const CustomSidebar = props => <Sidebar {...props} size={200} />;
-
-const CustomMenu = props => (
-    <Menu {...props}>
-        <MenuItems />
-    </Menu>
+const CustomSidebar = props => (
+    <Sidebar>
+        <Menu {...props}>
+            <MenuItems />
+        </Menu>
+    </Sidebar>
 )
 
 const styles = makeStyles(theme => ({
@@ -62,16 +61,13 @@ export default ({ children }) => {
             <div className={classes.root}>
                 <AppBar />
                 <main className={classes.contentWithSidebar}>
-                    <CustomSidebar>
-                        <CustomMenu />
-                    </CustomSidebar>
+                    <CustomSidebar />
                     <div id="main-content" className={classes.content}>
                         {children}
                     </div>
                 </main>
             </div>
 
-            <Notification />
         </>
     )
 };
