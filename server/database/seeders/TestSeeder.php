@@ -44,6 +44,7 @@ class TestSeeder extends Seeder
         // Admin user
         $admin = Person::create([
             'name' => 'Jesús Ordosgoitty',
+            'phone' => '0426123456',
             'community_id' => 1,
             'parish_id' => 1,
             'sector_id' => 1,
@@ -62,6 +63,7 @@ class TestSeeder extends Seeder
         // Analyst user
         $analyst = Person::create([
             'name' => 'Andreina Santana',
+            'phone' => '0294416548',
             'community_id' => 1,
             'parish_id' => 1,
             'sector_id' => 1,
