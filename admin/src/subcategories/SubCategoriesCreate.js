@@ -1,25 +1,25 @@
 import * as React from 'react'
 import BaseForm from '../components/BaseForm';
 import TextInput from '../components/TextInput'
-import categoriesValidations from './categoriesValidations'
+import categoriesValidations from './subcategoriesValidations'
 import { axios, history } from '../providers'
 import InputContainer from '../components/InputContainer'
-import { useParams } from 'react-router-dom'
+import SelectInput from '../components/SelectInput'
 
-const CategoriesCreate = () => {
+const SubcategoriesCreate = () => {
     const [loading, setLoading] = React.useState(false)
-    const { id } = useParams();
-    const [record, setRecord] = React.useState({})
+    const [categories, setCategories] = React.useState([])
 
     const handleSubmit = React.useCallback(async (values) => {
         setLoading(true)
         try {
-            const { data } = await axios.put(`/categories/${id}`, values);
+            const { data } = await axios.post(`/subcategories`, values);
 
             setLoading(false)
 
             if (data) {
-                history.push('/categories')
+                // notify(`¡Ha registrado el nivel "${data.name}"!`, 'success');
+                history.push('/subcategories')
             }
         } catch (error) {
             setLoading(false)
@@ -30,16 +30,14 @@ const CategoriesCreate = () => {
         }
     }, [])
 
-    const fetchRecord = async () => {
-        const { data } = await axios.get(`/categories/${id}`)
+    const fetchCategories = React.useCallback(async () => {
+        const { data } = await axios.get('/categories')
 
-        if (data) {
-            setRecord(data)
-        }
-    }
+        setCategories(data.data)
+    }, [])
 
-    React.useState(() => {
-        fetchRecord();
+    React.useEffect(() => {
+        fetchCategories()
     }, [])
 
     return (
@@ -49,18 +47,23 @@ const CategoriesCreate = () => {
             loading={loading}
             unresponsive
             onSubmit={handleSubmit}
-            record={record}
         >
             <InputContainer label='Nombre'>
                 <TextInput
                     name='name'
                     placeholder="Nombre de la nueva categoría"
                     fullWidth
-                    source='name'
+                />
+            </InputContainer>
+            <InputContainer label='Categoría'>
+                <SelectInput
+                    name='category_id'
+                    placeholder='Categoría'
+                    options={categories}
                 />
             </InputContainer>
         </BaseForm>
     );
 }
 
-export default CategoriesCreate;
+export default SubcategoriesCreate;
