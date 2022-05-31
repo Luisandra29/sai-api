@@ -14,6 +14,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useUserDispatch } from '../hooks/useUserState'
 import TextInput from '../components/TextInput'
 import PasswordInput from '../components/PasswordInput'
+import Logo from './logo.png'
 
 const validate = (values) => {
     const errors = {};
@@ -76,9 +77,7 @@ const Login = () => {
         <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
             <div className={classes.form}>
                 <Box className={classes.cardHeader}>
-                    <Typography variant="subtitle1" classKey='p'>
-                        Sistema de Atención Integral
-                    </Typography>
+                    <img src={Logo} alt="logo" />
                 </Box>
 
                 <InputContainer label='Correo electrónico' md={12}>
