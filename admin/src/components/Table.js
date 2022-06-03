@@ -8,22 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import LinkBehavior from '@approbado/lib/components/LinkBehavior'
-import Avatar from '@material-ui/core/Avatar';
-import configs from '@approbado/lib/configs'
 import { useMediaQuery } from '@material-ui/core'
-
-const GoToProfileButtonLink = ({ id }) => (
-    <Link
-        to={`/users/${id}/show`}
-        color='info'
-        underline='hover'
-        component={LinkBehavior}
-    >
-        Ver perfil
-    </Link>
-);
+import EditButton from './EditButton';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -65,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function RankingTable({ data }) {
+export default function Datagrid({ data }) {
     const classes = useStyles();
     const isSmall = useMediaQuery(theme =>
         theme.breakpoints.down('sm')
@@ -77,28 +63,11 @@ export default function RankingTable({ data }) {
                 <TableRow key={i} className={classes.tbodyRow}>
                     <TableCell align="left" className={classes.tBodyColumn}>
                         <Box className={classes.position}>
-                            {i+1}
+                            {row.name}
                         </Box>
                     </TableCell>
-                    <TableCell align="left" className={classes.tBodyColumn} component="th" scope="row">
-                        <Box className={classes.user}>
-                            <Avatar
-                                src={`${configs.SOURCE}/${row.picture}`}
-                                alt='photo_profile'
-                            />
-                            @{row.user_name}
-                        </Box>
-                    </TableCell>
-                    {(!isSmall) && (
-                        <TableCell align="center" className={classes.tBodyColumn}>
-                            {row.awards.length}
-                        </TableCell>
-                    )}
                     <TableCell align="center" className={classes.tBodyColumn}>
-                        {row.profile.points} pts
-                    </TableCell>
-                    <TableCell align="center" className={classes.tBodyColumn}>
-                        <GoToProfileButtonLink {...row} />
+                        <EditButton href={`/categories/${row.id}/edit`} />
                     </TableCell>
                 </TableRow>
             ))}
@@ -114,33 +83,13 @@ export default function RankingTable({ data }) {
                             className={classes.tHeadCell}
                             align="left"
                         >
-                            {(!isSmall) ? 'Puesto' : '#'}
-                        </TableCell>
-                        <TableCell
-                            className={classes.tHeadCell}
-                            align="left"
-                        >
-                            Usuarios
-                        </TableCell>
-                        {(!isSmall) && (
-                            <TableCell
-                                className={classes.tHeadCell}
-                                align="center"
-                            >
-                                Certificados
-                            </TableCell>
-                        )}
-                        <TableCell
-                            className={classes.tHeadCell}
-                            align="center"
-                        >
-                            {(!isSmall) ? 'Puntaje total' : 'P. total'}
+                            Nombre
                         </TableCell>
                         <TableCell
                             className={classes.tHeadCell}
                             align="center"
                         >
-                            Detalle
+                            Acciones
                         </TableCell>
                     </TableRow>
                 </TableHead>
