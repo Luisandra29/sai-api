@@ -8,6 +8,7 @@ import SubCategoriesCreate from './subcategories/SubCategoriesCreate'
 import SubCategoriesEdit from './subcategories/SubCategoriesEdit'
 import CategoriesCreate from './categories/CategoriesCreate'
 import CategoriesEdit from './categories/CategoriesEdit'
+import CategoriesList from './categories/CategoriesList'
 
 const App = () => (
     <>
@@ -16,6 +17,12 @@ const App = () => (
         <Switch>
             <ProtectedRoute layout={Layout} exact path="/" component={() => <Dashboard />} />
 
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/categories"
+                component={() => <CategoriesList />}
+            />
             <ProtectedRoute
                 layout={Layout}
                 exact

@@ -1,52 +1,54 @@
-import * as React from "react";
-import {
-    TextInput,
-    List,
-    Datagrid,
-    TextField,
-    SimpleList,
-    EditButton,
-    DeleteButton,
-    Filter
-} from 'react-admin';
-import { useMediaQuery } from '@material-ui/core';
+import * as React from 'react'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import SearchIcon from '@material-ui/icons/Search';
+import { useMediaQuery } from '@material-ui/core'
+import useFetch from '../hooks/useFetch'
 
-const CategoriesFilter = props => (
-    <Filter {...props}>
-        <TextInput label="Nombre" source='name' />
-    </Filter>
-);
+const CategoriesList = () => {
+    const isSmall = useMediaQuery(theme =>
+        theme.breakpoints.down('sm')
+    )
+    const [filter, setFilter] = React.useState({})
+    const {
+        loading,
+        error,
+        data,
+        hasMore
+    } = useFetch('/categories', {
+        perPage: 10,
+        page: 1,
+        filter: filter
+    })
 
-const CategoriesList = props => {
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const handleOnChange = (e) => {
+        if (e.currentTarget.value) {
+            setFilter({
+                name: e.currentTarget.value
+            })
+        } else {
+            setFilter({})
+        }
+    }
 
     return (
-      <List {...props}
-        title="Categorías"
-        bulkActionButtons={false}
-        filters={<CategoriesFilter />}
-        exporter={false}
-      >
-        {
-          isSmall
-          ? (
-            <SimpleList
-            primaryText={record => `${record.name}`}
-            secondaryText={record => `${record.applications_count} solicitudes`}
-          />
-          )
-          : (
-            <Datagrid>
-                <TextField source="name" label="Nombre"/>
-                <TextField source='applications_count' label='Solicitudes' />
-                {/* <Actions {...props} shouldEdit shouldDelete /> */}
-                <EditButton />
-                <DeleteButton />
-            </Datagrid>
-          )
-        }
-      </List>
-    );
-};
+        <Box display='flex' flexDirection='column'>
+            <Box width={isSmall ? '100%' : '636px'}>
+                <TextField
+                    onChange={handleOnChange}
+                    InputProps={{
+                        startAdornment: (
+                            <Box marginLeft='6px' display='flex'>
+                                <SearchIcon />
+                            </Box>
+                        )
+                    }}
+                    placeholder='Buscar'
+                    fullWidth
+                />
+            </Box>
+        </Box>
+    )
+}
 
-export default CategoriesList;
+export default CategoriesList

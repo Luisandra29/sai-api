@@ -77,7 +77,11 @@ const Login = () => {
         <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
             <div className={classes.form}>
                 <Box className={classes.cardHeader}>
-                    <img src={Logo} alt="logo" />
+                    <img
+                        src={Logo}
+                        alt="logo"
+                        height='300px'
+                    />
                 </Box>
 
                 <InputContainer label='Correo electrónico' md={12}>
