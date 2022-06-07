@@ -12,6 +12,7 @@ use App\PasswordReset;
 use Auth;
 use Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -38,13 +39,12 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken(Str::random(20))->plainTextToken;
-        $permissions = collect($user->roles()->pluck('name'))
-            ->merge($user->permissions()->pluck('name'));
+        // $permissions = collect($user->roles()->pluck('name'))
+        //     ->merge($user->permissions()->pluck('name'));
 
         return response()->json([
-            'user' => $user->toJson(),
-            'token' => $token,
-            'permissions' => $permissions->toJson()
+            'user' => $user,
+            'token' => $token
         ], 201);
     }
 

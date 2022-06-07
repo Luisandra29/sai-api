@@ -7,7 +7,6 @@ use App\Models\Category;
 
 class CategoriesSeeder extends Seeder
 {
-
     public $categories = Array(
         'Salud',
         'Servicios Funerarios',
@@ -19,7 +18,6 @@ class CategoriesSeeder extends Seeder
         'Transporte',
         'Aseo'
     );
-
 
     /**
      * Run the database seeds.

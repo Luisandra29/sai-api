@@ -23,9 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CommunitiesSeeder::class);
         $this->call(CommunityParishSeeder::class);
         $this->call(CategoriesSeeder::class);
-
-        if (App::environment() == 'production') {
-           $this->call(AdminSeeder::class);
-        }
+        $this->call(AdminSeeder::class);
     }
 }

@@ -16,11 +16,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         User::create([
-<<<<<<< Updated upstream
-            'login' => 'login',
-=======
-            'email' => 'admin',
->>>>>>> Stashed changes
+            'login' => 'admin',
             'password' => bcrypt('qwerty123'),
             'active' => true,
             'activation_token' => Str::random(60),
