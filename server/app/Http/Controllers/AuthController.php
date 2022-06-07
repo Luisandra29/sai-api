@@ -12,48 +12,49 @@ use App\PasswordReset;
 use Auth;
 use Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $credentials = request(['email', 'password']);
-        $credentials['active'] = true;
-        $credentials['deleted_at'] = null;
+        // Check email
+        $user = User::where('login', $request->login)->first();
 
-        if (!Auth::attempt($credentials)) {
+        if (!$user) {
             return response()->json([
-                'success' => false,
                 'errors' => [
-                    'email' => 'Tu contraseña o correo son inválidos.'
+                    'login' => ['Login incorrecto']
                 ]
             ], 401);
         }
-        $user = Auth::user();
 
-        //$tokenResult = $user->createToken('authToken');
+        // Check password
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'errors' => [
+                    'password' => ['Contraseña incorrecta']
+                ]
+            ], 401);
+        }
+
+        $token = $user->createToken(Str::random(20))->plainTextToken;
+        // $permissions = collect($user->roles()->pluck('name'))
+        //     ->merge($user->permissions()->pluck('name'));
 
         return response()->json([
-            //'token' => $tokenResult->accessToken,
-            'token' => auth()->user()->createToken('authToken')->plainTextToken,
-            //'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
-            'user' => $user
-        ]);
+            'user' => $user,
+            'token' => $token
+        ], 201);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        $user = $request->user();
+        $user->tokens()->delete();
 
-        return response()->json([ 'success' => true ]);
-    }
-
-    public function getUser(Request $request)
-    {
         return response()->json([
-            'user' => $request
-                ->user()
-                ->load('profile.applications', 'profile.organizations')
-        ]);
+            'data' => 'Logged out!'
+        ], 200);
     }
 }

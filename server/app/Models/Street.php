@@ -5,24 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Community extends Model
+class Street extends Model
 {
     use HasFactory;
 
-    protected $table = 'communities';
+    protected $table = 'streets';
 
     protected $fillable = [ 'name' ];
 
-	protected $appends = ['parish_names'];
-
-    public function parishes()
-    {
-        return $this->belongsToMany(Parish::class, 'community_parish');
-    }
+    //protected $appends = ['sector_names'];
 
     public function sectors()
     {
-        return $this->hasMany(Sector::class);
+        return $this->belongsToMany(Sector::class, 'street_sector');
     }
 
     public function applications()
@@ -35,8 +30,8 @@ class Community extends Model
         return $this->hasMany(Person::class);
     }
 
-    public function getParishNamesAttribute()
-    {
-        return $this->parishes()->get()->implode('name', ', ');
-    }
+    // public function getSectorNamesAttribute()
+    // {
+    //     return $this->sectors()->get()->implode('name', ', ');
+    // }
 }
