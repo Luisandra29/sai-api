@@ -6,8 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Application;
 use Illuminate\Support\Facades\App;
 
-
-
 class DatabaseSeeder extends Seeder
 {
     /**

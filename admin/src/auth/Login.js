@@ -10,11 +10,11 @@ import { axios } from '../providers'
 import InputContainer from '../components/InputContainer'
 import AuthLayout from '../layouts/AuthLayout'
 import formStyles from '../styles/formStyles'
-import { theme } from '../styles';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom'
-import { TextInput, PasswordInput } from 'react-admin'
 import { useUserDispatch } from '../hooks/useUserState'
+import TextInput from '../components/TextInput'
+import PasswordInput from '../components/PasswordInput'
+import Logo from './logo.png'
 
 const validate = (values) => {
     const errors = {};
@@ -77,23 +77,24 @@ const Login = () => {
         <AuthLayout validate={validate} handleSubmit={handleSubmit} title='Iniciar sesión'>
             <div className={classes.form}>
                 <Box className={classes.cardHeader}>
-                    <img src={`${process.env.PUBLIC_URL}/logotipo.png`} alt='approbado_logotipo' height="50px" width="200px" />
-                    <Typography variant="subtitle1" classKey='p'>
-                        Administrador
-                    </Typography>
+                    <img
+                        src={Logo}
+                        alt="logo"
+                        height='300px'
+                    />
                 </Box>
 
-                <InputContainer labelName='Correo electrónico' md={12}>
+                <InputContainer label='Correo electrónico' md={12}>
                     <TextInput
-                        source="email"
+                        name="email"
                         placeholder="Ingrese su correo electrónico"
                         disabled={loading}
                         fullWidth
                     />
                 </InputContainer>
-                <InputContainer labelName='Contraseña' md={12}>
+                <InputContainer label='Contraseña' md={12}>
                     <PasswordInput
-                        source="password"
+                        name="password"
                         placeholder="Ingrese su contraseña"
                         disabled={loading}
                         fullWidth
@@ -112,10 +113,4 @@ const Login = () => {
     );
 };
 
-const LoginWithTheme = props => (
-    <ThemeProvider theme={createMuiTheme(theme)}>
-        <Login {...props} />
-    </ThemeProvider>
-);
-
-export default LoginWithTheme;
+export default Login;

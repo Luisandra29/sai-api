@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Form } from 'react-final-form';
-import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
-import { theme } from '../styles';
-import { Card, Box } from '@material-ui/core'
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
+import Card from '@material-ui/core/Card'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(theme => ({
     outer: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         width: '30%'
     },
     card: {
-        background: fade(theme.palette.secondary.light, 0.5),
+        background: alpha(theme.palette.secondary.light, 0.5),
         padding: '1rem 0',
         width: '24rem',
         display: 'flex',
@@ -56,13 +54,6 @@ const AuthLayout = ({ validate, handleSubmit, children, ...rest }) => {
 
     return (
         <Box component='div' className={classes.outer}>
-            <Box component="div" className={classes.header}>
-                <Box padding='1rem' paddingLeft='2rem'>
-                    <Link to="/">
-                        <img src={`${process.env.PUBLIC_URL}/logotipo.png`} alt='approbado_logotipo' height='40px' width='200px' />
-                    </Link>
-                </Box>
-            </Box>
             <Form
                 onSubmit={handleSubmit}
                 validate={validate}
@@ -83,10 +74,4 @@ const AuthLayout = ({ validate, handleSubmit, children, ...rest }) => {
     );
 };
 
-const AuthLayoutWithTheme = props => (
-    <ThemeProvider theme={createMuiTheme(theme)}>
-        <AuthLayout {...props} />
-    </ThemeProvider>
-);
-
-export default AuthLayoutWithTheme;
+export default AuthLayout;

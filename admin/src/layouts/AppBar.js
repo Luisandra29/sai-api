@@ -9,7 +9,7 @@ import {
 // Icons
 import ToggleSidebarButton from './ToggleSidebarButton';
 import GoBackButton from './GoBackButton';
-import { useSelector } from 'react-redux';
+import { useSidebarState } from '../hooks/useSidebar'
 import UserMenu from './UserMenu'
 import { MenuItemLink } from 'react-admin'
 import ProfileIcon from '@material-ui/icons/AccountBox';
@@ -87,7 +87,7 @@ const AppBar = props => {
     const isXSmall = useMediaQuery(theme =>
         theme.breakpoints.down('xs')
     );
-    const open = useSelector(state => state.admin.ui.sidebarOpen);
+    const open = useSidebarState()
     const classes = useStyles({
         isOpenSidebar: open,
         isXSmall: isXSmall,

@@ -6,10 +6,6 @@ import Dialog from '../components/Dialog'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    hideNotification,
-    getNotification,
-} from 'ra-core';
 import { makeStyles } from '@material-ui/core/styles';
 import ConfirmIcon from '@material-ui/icons/Check';
 
@@ -49,7 +45,6 @@ const Notification = ({
   autoHideDuration = 3000
 }) => {
     const [open, setOpen] = React.useState(false);
-    const notification = useSelector(getNotification);
     const dispatch = useDispatch();
     const classes = useStyles();
     const timerAutoHide = React.useRef();
@@ -73,12 +68,11 @@ const Notification = ({
 
     const handleClose = React.useCallback(() => {
         setOpen(false);
-        dispatch(hideNotification());
     }, [dispatch, setOpen]);
 
-    React.useEffect(() => {
-        setOpen(!!notification);
-    }, [notification]);
+    // React.useEffect(() => {
+    //     setOpen(!!notification);
+    // }, [notification]);
 
     return (
         <Dialog open={open} handleClose={handleClose} title={<CustomDialogTitle handleClose={handleClose} />}>
