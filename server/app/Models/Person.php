@@ -11,7 +11,7 @@ class Person extends Model
 
     protected $table = 'people';
 
-    protected $fillable = [ 'dni', 'name', 'address', 'phone', 'community_id', 'parish_id' ];
+    protected $fillable = [ 'dni', 'name', 'address', 'phone', 'community_id', 'parish_id' , 'sector_id', 'street_id' ];
 
     protected $appends = [
         'full_address'
@@ -19,7 +19,7 @@ class Person extends Model
 
     public function getFullAddressAttribute()
     {
-        return "{$this->parish->name}, {$this->community->name}, {$this->address}";
+        return "{$this->parish->name}, {$this->community->name}, {$this->sector->name}, {$this->street->name}, {$this->address}";
     }
 
     public function parish()
@@ -30,6 +30,16 @@ class Person extends Model
     public function community()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
+    }
+
+    public function street()
+    {
+        return $this->belongsTo(Street::class);
     }
 
     public function applications()

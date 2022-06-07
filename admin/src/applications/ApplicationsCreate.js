@@ -8,7 +8,7 @@ import {
 } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
 import { useFormState } from 'react-final-form';
-  
+
 const validate = values => {
     const errors = {};
 
@@ -17,15 +17,15 @@ const validate = values => {
         errors.title = ['El máximo número de caracteres permitidos es 100.'];
       }
     }
-  
+
     if (!values.title || !values.title.trim()) {
-      errors.title = ['Ingrese un título.'];
+      errors.title = ['Ingrese observación.'];
     }
-  
+
     if (!values.description || !values.description.trim()) {
-      errors.description = ['Ingrese un asunto.'];
+      errors.description = ['Ingrese una descripción.'];
     }
-  
+
     if (values.description) {
       if (values.description.length > 500) {
         errors.description = ['El máximo número de caracteres permitidos es 500.'];
@@ -46,7 +46,11 @@ const validate = values => {
     if (!values.dni) {
       errors.dni = 'Ingrese la cédula de identidad';
     }
-  
+
+    if (!values.phone) {
+        errors.phone = 'Ingrese el número de contacto';
+      }
+
     return errors;
 };
 
@@ -96,8 +100,8 @@ const ApplicationsCreate = props => (
       <Typography variant="subtitle1">
         Datos de la solicitud
       </Typography>
-      <TextInput source="title" label="Título" multiline fullWidth />
-      <TextInput source="description" label="Mensaje" multiline fullWidth />
+      <TextInput source="title" label="Observación" multiline fullWidth />
+      <TextInput source="description" label="Descripción" multiline fullWidth />
       <ReferenceInput label="Categoría" source="category_id" reference="categorias" >
         <SelectInput optionText="name" optionValue="id"/>
       </ReferenceInput>

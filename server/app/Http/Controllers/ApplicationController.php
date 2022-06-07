@@ -29,7 +29,7 @@ class ApplicationController extends Controller
 
         $query = Application::withTrashed()
             ->latest()
-            ->with('category', 'person');
+            ->with('person', 'subcategory', 'user');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -86,6 +86,7 @@ class ApplicationController extends Controller
         }
 
         return $query->paginate($results);
+
     }
 
     public function report($query)
@@ -119,33 +120,21 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        $person = Person::create([
-            'dni' => $request->dni,
-            'name' => $request->full_name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'community_id' => $request->community_id,
-            'parish_id' => $request->parish_id,
-        ]);
-        $category = $request->get('category_id');
-        //$application = new Application($request->all());
         $num = Application::getNewNum();
-        //$application->state_id = 1;
-        $category_id = $category;
-        $person_id= $person->id;
 
-        $application = Application::create([
+        $user_id = Auth::user()->id;
+        Application::create([
             'title' => $request->title,
             'description' => $request->description,
             'num' => $num,
-            'category_id' => $category_id,
+            'quantity' => $request->quantity,
+            'subcategory_id' => $request->subcategory_id,
             'state_id' => '1',
-            'person_id' => $person_id,
-
+            'person_id' => $request->person_id,
+            'user_id' => $user_id
         ]);
 
-        $person->applications()->save($application);
-
+        //$person->applications()->save($application);
 
         return response()->json([
             'success' => true,
@@ -161,7 +150,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return Response($application->load(['category', 'state', 'person']));
+        return Response($application->load(['subcategory', 'state', 'person']));
     }
 
     /**

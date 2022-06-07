@@ -132,12 +132,12 @@ const ApplicationsList = props => {
             </ListContextProvider>
           ) : (
             <div>
-              
+
               {filterValues.status === 'Pendientes' && (
                 <ListContextProvider value={{ ...listContext, ids: selectedIds }}>
                   <Datagrid {...props} optimized>
                     <TextField label='Número' source="num" />
-                    <TextField label='Asunto' source="title" />
+                    <TextField label='Descripción' source="title" />
                     <ChipField label='Categoría' source="category.name" />
                     <Actions {...props} shouldShow shouldDelete={{ label: 'Rechazar' }}>
                       <ApproveButton />
@@ -150,7 +150,7 @@ const ApplicationsList = props => {
                 <ListContextProvider value={{ ...listContext, ids: selectedIds }}>
                   <Datagrid {...props} optimized>
                     <TextField label='Número' source="num" />
-                    <TextField label='Asunto' source="title" />
+                    <TextField label='Descripción' source="title" />
                     <ChipField label='Categoría' source="category.name" />
                     <Actions {...props} shouldShow />
                   </Datagrid>
@@ -161,7 +161,7 @@ const ApplicationsList = props => {
                 <ListContextProvider value={{ ...listContext, ids: selectedIds }}>
                   <Datagrid {...props} optimized>
                     <TextField label='Número' source="num" />
-                    <TextField label='Asunto' source="title" />
+                    <TextField label='Descripción' source="title" />
                     <ChipField label='Categoría' source="category.name" />
                     <Actions {...props} shouldShow />
                   </Datagrid>

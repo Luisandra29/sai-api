@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Person;
+use App\Models\Subcategory;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateSubcategoryRequest;
+use App\Http\Requests\UpdateSubcategoryRequest;
 
-class PersonController extends Controller
+
+
+class SubcategoryController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $query = Person::query()->withCount('applications');
+    public function index(Request $request){
+        $query = Subcategory::query()->withCount('applications');
 
         $results = $request->perPage;
         $sort = $request->sort;
@@ -32,17 +35,9 @@ class PersonController extends Controller
         }
 
         return $query->paginate($results);
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -50,41 +45,32 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSubcategoryRequest $request)
     {
-        $person = Person::create([
-            'dni' => $request->dni,
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'community_id' => $request->community_id,
-            'parish_id' => $request->parish_id,
-            'sector_id' => $request->sector_id,
-            'street_id' => $request->street_id,
-        ]);
+        $subcategory = Subcategory::create($request->all());
 
-        return $person;
+        return $subcategory;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Person  $person
+     * @param  \App\Models\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Person $person)
+    public function show(Subcategory $subcategory)
     {
-        return $person->load(['applications'])
+        return $subcategory->load(['applications'])
         ->loadCount('applications');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Person  $person
+     * @param  \App\Models\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Person $person)
+    public function edit(Subcategory $subcategory)
     {
         //
     }
@@ -93,27 +79,26 @@ class PersonController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Person  $person
+     * @param  \App\Models\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person)
+    public function update(UpdateSubcategoryRequest $request, Subcategory $subcategory)
     {
-        $person->update($request->all());
+        $subcategory->update($request->all());
 
-        return $person;
+        return $subcategory;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Person  $person
+     * @param  \App\Models\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $person)
+    public function destroy(Subcategory $subcategory)
     {
-        $person->delete();
+        $subcategory->delete();
 
-        return $person;
+        return $subcategory;
     }
-
 }

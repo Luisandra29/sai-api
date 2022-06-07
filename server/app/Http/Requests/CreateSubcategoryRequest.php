@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class CreateSubcategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,14 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'required',
-            'password' => 'required'
+            'name' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'login.required' => 'Ingrese su nombre de usuario',
-            'password.required' => 'Ingrese su contraseña'
+            'name.required' => 'Ingrese el nombre para una nueva subcategoría'
         ];
     }
 }

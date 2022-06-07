@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class CreateStreetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'required',
-            'password' => 'required'
+            'name' => 'required',
+            'sectors' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'login.required' => 'Ingrese su nombre de usuario',
-            'password.required' => 'Ingrese su contraseña'
+            'name.required' => 'Ingrese el nombre de la calle',
+            'sectors.required' => 'Seleccione un sector'
         ];
     }
 }
