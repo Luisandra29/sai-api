@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'login' => 'required',
             'password' => 'required'
         ];
     }
@@ -32,8 +32,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'Ingrese su correo electrónico',
-            'email.email' => 'El correo electrónico es incorrecto',
+            'login.required' => 'Ingrese su nombre de usuario',
             'password.required' => 'Ingrese su contraseña'
         ];
     }

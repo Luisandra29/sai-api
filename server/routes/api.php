@@ -71,7 +71,7 @@ Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
 
 
 
- });
+});
 
 
 
