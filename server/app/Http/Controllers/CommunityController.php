@@ -21,7 +21,6 @@ class CommunityController extends Controller
         $sort = $request->sort;
         $order = $request->order;
 
-
         if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
@@ -40,25 +39,7 @@ class CommunityController extends Controller
         }
 
         return $query->paginate($results);
-
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        $query = Community::query()->withCount('applications');
-        $results = $request->perPage;
-        $sort = $request->sort;
-        $order = $request->order;
-
-        return $query->paginate($results);
-
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -73,11 +54,7 @@ class CommunityController extends Controller
         ]);
         $community->parishes()->sync($request->parishes);
 
-        return Response([
-            'success' => true,
-            'id' => $community->id,
-            'attributes' => $community
-        ]);
+        return $community;
     }
 
     /**
@@ -93,17 +70,6 @@ class CommunityController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Community  $community
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Community $community)
-    {
-        return $community->load('parishes');
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -115,10 +81,7 @@ class CommunityController extends Controller
         $community->name = $request->name;
         $community->parishes()->sync($request->parishes);
 
-        return response()->json([
-            'id' => $user->id,
-            'attributes' => $user
-        ]);
+        return $community;
     }
 
     /**
@@ -131,8 +94,6 @@ class CommunityController extends Controller
     {
         $community->delete();
 
-        return response()->json([
-            'message' => "¡Ha sido eliminada la comunidad {$community->name}!"
-        ]);
+        return $community;
     }
 }
