@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Parish;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateParishRequest;
 
 class ParishController extends Controller
 {
@@ -21,13 +22,23 @@ class ParishController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified resource.
      *
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(CreateParishRequest $request)
     {
-        //
+        $parish = Parish::create($request->all());
+
+        return $parish;
+    }
+
+    public function update(CreateParishRequest $request, Parish $parish)
+    {
+        $parish->update($request->all());
+
+        return $parish;
     }
 
     public function show(Parish $parish)
@@ -35,8 +46,16 @@ class ParishController extends Controller
         return Response($parish->load('applications', 'people'));
     }
 
-    public function getCommunities(Parish $parish)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Parish $parish)
     {
-        return Response($parish->communities);
+        $parish->delete();
+
+        return $parish;
     }
 }

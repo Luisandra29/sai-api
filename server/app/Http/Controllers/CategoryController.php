@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\Application;
 
-
 class CategoryController extends Controller
 {
 	public function index(Request $request){
@@ -53,10 +52,6 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         return $category->load(['applications'])->loadCount('applications');
-
-
-        //return response($category->load('applications', 'subcategories'));
-
     }
 
     /**
@@ -85,5 +80,4 @@ class CategoryController extends Controller
 
         return $category;
     }
-
 }
