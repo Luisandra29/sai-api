@@ -11,7 +11,16 @@ class Person extends Model
 
     protected $table = 'people';
 
-    protected $fillable = [ 'dni', 'name', 'address', 'phone', 'community_id', 'parish_id' , 'sector_id', 'street_id' ];
+    protected $fillable = [
+        'dni',
+        'name',
+        'address',
+        'phone',
+        'community_id',
+        'parish_id',
+        'sector_id',
+        'street_id'
+    ];
 
     protected $appends = [
         'full_address'
