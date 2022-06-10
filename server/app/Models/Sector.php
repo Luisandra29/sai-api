@@ -11,7 +11,10 @@ class Sector extends Model
 
     protected $table = 'sectors';
 
-    protected $fillable = [ 'name','community_id' ];
+    protected $fillable = [
+        'name',
+        'community_id'
+    ];
 
     protected $appends = ['community_names'];
 

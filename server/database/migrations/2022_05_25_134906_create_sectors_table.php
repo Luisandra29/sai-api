@@ -37,7 +37,6 @@ class CreateSectorsTable extends Migration
             $table->foreign('street_id')->references('id')->on('streets')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
