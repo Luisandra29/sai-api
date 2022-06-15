@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('applications/{application}/download', 'ApplicationController@download')
         ->name('applications.download-cert');
     // Analytics
-    Route::get('home', 'AnalyticsController@home');
+    Route::get('/statistics', 'StatisticsController');
 
     // Roles
     Route::get('roles', 'RoleController@index');
