@@ -55,10 +55,8 @@ class ApplicationController extends Controller
                     $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
                 });
             }
-            if (array_key_exists('person', $filters)) {
-                $query->whereHas('person', function ($query) use ($filters) {
-                    $query->where(strtolower('dni'), 'ilike', '%'.$filters['person'].'%');
-                });
+            if (array_key_exists('person_id', $filters)) {
+                $query->where('person_id', '=', $filters['person_id']);
             }
             if (array_key_exists('person_name', $filters)) {
                 $query->whereHas('person', function ($query) use ($filters) {
@@ -123,6 +121,7 @@ class ApplicationController extends Controller
         $num = Application::getNewNum();
 
         $user_id = Auth::user()->id;
+
         Application::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -133,8 +132,6 @@ class ApplicationController extends Controller
             'person_id' => $request->person_id,
             'user_id' => $user_id
         ]);
-
-        //$person->applications()->save($application);
 
         return response()->json([
             'success' => true,

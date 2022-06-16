@@ -26,8 +26,13 @@ class SubcategoryController extends Controller
 
         if ($request->has('filter')) {
             $filters = $request->filter;
-            $name = $filters['name'];
-            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
+
+            if (array_key_exists('name', $filters)) {
+                $query->where(strtolower('name'), 'ilike', '%'.$filters['name'].'%');
+            }
+            if (array_key_exists('category_id', $filters)) {
+                $query->where('category_id', '=', $filters['category_id']);
+            }
         }
 
         if ($sort && $order) {
@@ -35,7 +40,7 @@ class SubcategoryController extends Controller
         }
 
         return $query->paginate($results);
-        
+
     }
 
 
