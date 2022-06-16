@@ -29,7 +29,7 @@ class ApplicationController extends Controller
 
         $query = Application::withTrashed()
             ->latest()
-            ->with('person', 'subcategory', 'user');
+            ->with('person', 'subcategory', 'user', 'state');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
