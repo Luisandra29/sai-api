@@ -15,11 +15,10 @@ class StreetController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Street::query()->withCount('applications');
+        $query = Street::query()->withCount('applications')->with('sectors');
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
-
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -39,9 +38,7 @@ class StreetController extends Controller
         }
 
         return $query->paginate($results);
-
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -56,10 +53,9 @@ class StreetController extends Controller
         $order = $request->order;
 
         return $query->paginate($results);
-
     }
 
-        /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -72,12 +68,6 @@ class StreetController extends Controller
         ]);
         $street->sectors()->sync($request->sectors);
 
-        // return Response([
-        //     'success' => true,
-        //     'id' => $street->id,
-        //     'attributes' => $street
-        // ]);
-
         return response()->json($street, 201);
     }
 
@@ -89,22 +79,10 @@ class StreetController extends Controller
      */
     public function show(Street $street)
     {
-        return $street->load(['applications'])
-            ->loadCount('applications');
-    }
-
-        /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Street  $street
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Street $street)
-    {
         return $street->load('sectors');
     }
 
-       /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -114,10 +92,9 @@ class StreetController extends Controller
     public function update(Request $request, Street $street)
     {
         $street->update($request->all());
+        $street->sectors()->sync($request->sectors);
 
-        return $street;
         return response()->json($street, 201);
-
     }
 
     /**
@@ -130,11 +107,6 @@ class StreetController extends Controller
     {
         $street->delete();
 
-        // return response()->json([
-        //     'message' => "¡Ha sido eliminada la comunidad {$street->name}!"
-        // ]);
-
         return response()->json($street, 201);
-
     }
 }
