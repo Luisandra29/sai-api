@@ -24,9 +24,11 @@ class CreateApplicationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:100',
+            'title' => 'required|max:200',
             'description' => 'required|max:500',
-            'category' => 'required'
+            'quantity' => 'nullable|integer|numeric',
+            'subcategory_id' => 'required',
+            'person_id' => 'required'
         ];
     }
 
@@ -34,10 +36,11 @@ class CreateApplicationRequest extends FormRequest
     {
         return [
             'title.required' => 'Ingrese un título',
-            'title.max' => '100 caracteres permitidos',
+            'title.max' => '200 caracteres permitidos',
             'description.max' => '500 caracteres permitidos',
             'description.required' => 'Ingrese una descripción',
-            'category.required' => 'Seleccione una categoría'
+            'subcategory_id.required' => 'Seleccione una categoría',
+            'person_id.required' => 'Seleccione una persona'
         ];
     }
 }

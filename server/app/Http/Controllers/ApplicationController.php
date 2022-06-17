@@ -12,6 +12,7 @@ use PDF;
 use Mail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateApplicationRequest;
 
 class ApplicationController extends Controller
 {
@@ -116,7 +117,7 @@ class ApplicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateApplicationRequest $request)
     {
         $num = Application::getNewNum();
 
