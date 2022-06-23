@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateSubcategoryRequest extends FormRequest
+class CreatePositionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,7 @@ class CreateSubcategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Ingrese un nombre para la nueva subcategoría'
+            'name.required' => 'Ingrese un nombre para el cargo nuevo.'
         ];
     }
 }
