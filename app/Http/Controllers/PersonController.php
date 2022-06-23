@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use App\Models\Application;
+use App\Models\Position;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreatePersonRequest;
+
 
 class PersonController extends Controller
 {
@@ -15,7 +18,7 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Person::query()->withCount('applications');
+        $query = Person::query()->withCount('applications')->with('positions');
 
         $results = $request->perPage;
         $sort = $request->sort;
@@ -50,18 +53,11 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePersonRequest $request)
     {
-        $person = Person::create([
-            'dni' => $request->dni,
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'community_id' => $request->community_id,
-            'parish_id' => $request->parish_id,
-            'sector_id' => $request->sector_id,
-            'street_id' => $request->street_id,
-        ]);
+        $person = Person::create($request->all());
+
+        $person->positions()->sync($request->positions);
 
         return $person;
     }
@@ -74,7 +70,7 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-        return $person->load(['applications'])
+        return $person->load(['applications', 'positions'])
         ->loadCount('applications');
     }
 
@@ -99,6 +95,8 @@ class PersonController extends Controller
     public function update(Request $request, Person $person)
     {
         $person->update($request->all());
+
+        $person->positions()->sync($request->positions);
 
         return $person;
     }

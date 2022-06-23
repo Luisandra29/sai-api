@@ -55,4 +55,11 @@ class Person extends Model
     {
         return $this->hasMany(Application::class);
     }
+
+    public function positions()
+    {
+        return $this->belongsToMany(Position::class, 'person_position');
+    }
+
+
 }
