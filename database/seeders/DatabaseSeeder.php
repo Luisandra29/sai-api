@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CommunitiesSeeder::class);
         $this->call(CommunityParishSeeder::class);
         $this->call(CategoriesSeeder::class);
+        $this->call(PositionsSeeder::class);
         $this->call(AdminSeeder::class);
     }
 }

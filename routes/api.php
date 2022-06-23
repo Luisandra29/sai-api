@@ -65,5 +65,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Roles
     Route::get('roles', 'RoleController@index');
     Route::post('users/{user}/update-status', 'UserController@changeStatus');
+
+    //Positions
+    Route::resource('positions', 'PositionController');
 });
 
