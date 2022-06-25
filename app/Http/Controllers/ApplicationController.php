@@ -205,11 +205,15 @@ class ApplicationController extends Controller
                 'message' => 'Las solicitudes aprobadas no pueden ser borradas'
             ]);
         }
-        $application->update([ 'state_id' => 3 ]);
+        else{
+            $application->update([ 'state_id' => 3 ]);
 
-        return Response([
+            return Response([
             'success' => true,
             'message' => '¡Ha rechazado la solicitud #'.$application->num.'!'
-        ]);
+            ]);
+        }
+
+        
     }
 }
