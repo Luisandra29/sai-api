@@ -32,6 +32,11 @@ class Application extends Model
         return $this->belongsTo(Person::class);
     }
 
+    /*public function position()
+    {
+        return $this->hasManyThrough(Position::class, Person::class);
+    }*/
+
     public function user()
     {
         return $this->belongsTo(User::class);

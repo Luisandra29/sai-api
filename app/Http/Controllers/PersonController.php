@@ -92,7 +92,8 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person)
+    
+    public function update(CreatePersonRequest $request, Person $person)
     {
         $person->update($request->all());
 
