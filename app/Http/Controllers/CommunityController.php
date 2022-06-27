@@ -21,7 +21,7 @@ class CommunityController extends Controller
         $sort = $request->sort;
         $order = $request->order;
 
-        if ($request->has('filter')) {
+        /*if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
             if (array_key_exists('name', $filters)) {
@@ -31,6 +31,14 @@ class CommunityController extends Controller
                 $query->whereHas('parishes', function($q) use ($filters) {
                     $q->where('parish_id', $filters['parish_id']);
                 });
+            }
+        }*/
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->where('name', '=', $filters['name']);
             }
         }
 
