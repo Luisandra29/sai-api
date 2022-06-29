@@ -22,22 +22,18 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest()->with(['role']);
+        $query = User::latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
-            if (array_key_exists('email', $filters)) {
-                $query->whereLike('email', $filters['email']);
-            }
-            /*if (array_key_exists('name', $filters)) {
-                $query->whereHas('person', function ($query) use ($filters) {
-                    return $query->whereLike('name', $filters['name']);
-                });
-            }*/
 
-            if (array_key_exists('rol', $filters)) {
+            if (array_key_exists('user_name', $filters)) {
+                $query->where('login', 'like', '%'.$filters['user_name'].'%');
+            }
+            
+            /*if (array_key_exists('rol', $filters)) {
                 $query->whereHas('role', function ($query) use ($filters) {
                     return $query->whereLike('name', $filters['rol']);
                 });
@@ -45,7 +41,7 @@ class UserController extends Controller
             if (array_key_exists('status', $filters)) {
                 $status = ($filters['status'] == 'Activos') ? 1 : 0;
                 $query->whereActive($status);
-            }
+            }*/
         }
 
         return $query->paginate($results);

@@ -21,24 +21,16 @@ class CommunityController extends Controller
         $sort = $request->sort;
         $order = $request->order;
 
-        /*if ($request->has('filter')) {
-            $filters = $request->filter;
-            // Get fields
-            if (array_key_exists('name', $filters)) {
-                $query->where(strtolower('name'), 'ilike', '%'.$filters['name'].'%');
-            }
-            if (array_key_exists('parish_id', $filters)) {
-                $query->whereHas('parishes', function($q) use ($filters) {
-                    $q->where('parish_id', $filters['parish_id']);
-                });
-            }
-        }*/
-
         if ($request->has('filter')) {
             $filters = $request->filter;
 
             if (array_key_exists('name', $filters)) {
-                $query->where('name', '=', $filters['name']);
+                $query->where('name', 'like', '%'.$filters['name'].'%');
+            }
+            if (array_key_exists('parish_names', $filters)) {
+                $query->whereHas('parishes', function($q) use ($filters) {
+                    $q->where('parishes.name', 'like', '%'.$filters['parish_names'].'%');
+                });
             }
         }
 

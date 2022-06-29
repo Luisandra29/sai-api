@@ -24,11 +24,21 @@ class StreetController extends Controller
             $filters = $request->filter;
             // Get fields
             if (array_key_exists('name', $filters)) {
-                $query->where(strtolower('name'), 'ilike', '%'.$filters['name'].'%');
+                $query->where('name', 'like', '%'.$filters['name'].'%');
             }
-            if (array_key_exists('sector_id', $filters)) {
+            if (array_key_exists('sector_name', $filters)) {
                 $query->whereHas('sectors', function($q) use ($filters) {
-                    $q->where('sector_id', $filters['sector_id']);
+                    $q->where('name', 'like', '%'.$filters['sector_name'].'%');
+                });
+            }
+            if (array_key_exists('community_name', $filters)) {
+                $query->whereHas('sectors.community', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['community_name'].'%');
+                });
+            }
+            if (array_key_exists('parish_name', $filters)) {
+                $query->whereHas('sectors.community.parishes', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['parish_name'].'%');
                 });
             }
         }
