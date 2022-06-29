@@ -41,39 +41,59 @@ class ApplicationController extends Controller
                 });
             }
             if (array_key_exists('title', $filters)) {
-                $query->where(strtolower('title'), 'ilike', '%'.$filters['title'].'%');
-
+                $query->where('title', 'like', '%'.$filters['title'].'%');
             }
             if (array_key_exists('created_at', $filters)) {
-                $query->where(strtolower('created_at'), 'ilike', '%'.$filters['created_at'].'%');
+                $query->where('created_at', 'like', '%'.$filters['created_at'].'%');
             }
             if (array_key_exists('num', $filters)) {
-                $query->where(strtolower('num'), 'ilike', '%'.$filters['num'].'%');
-
+                $query->where('num', 'like', '%'.$filters['num'].'%');
             }
-            if (array_key_exists('category', $filters)) {
-                $query->whereHas('category', function ($query) use ($filters) {
-                    $query->where(strtolower('name'), 'ilike', '%'.$filters['category'].'%');
+
+            if (array_key_exists('subcategory', $filters)) {
+                $query->whereHas('subcategory', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['subcategory'].'%');
                 });
             }
-            if (array_key_exists('person_id', $filters)) {
-                $query->where('person_id', '=', $filters['person_id']);
+
+            if (array_key_exists('category', $filters)) {
+                $query->whereHas('subcategory.category', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['category'].'%');
+                });
             }
+
             if (array_key_exists('person_name', $filters)) {
                 $query->whereHas('person', function ($query) use ($filters) {
-                    $query->where(strtolower('name'), 'ilike', '%'.$filters['person_name'].'%');
+                    $query->where('name', 'like', '%'.$filters['person_name'].'%');
                 });
             }
-            if (array_key_exists('community_name', $filters)) {
-                $query->whereHas('person.community', function ($query) use ($filters) {
-                    $query->where(strtolower('name'), 'ilike', '%'.$filters['community_name'].'%');
-                });
-            }
+
             if (array_key_exists('parish_name', $filters)) {
                 $query->whereHas('person.parish', function ($query) use ($filters) {
-                    $query->where(strtolower('name'), 'ilike', '%'.$filters['parish_name'].'%');
+                    $query->where('name', 'like', '%'.$filters['parish_name'].'%');
                 });
             }
+
+            if (array_key_exists('community_name', $filters)) {
+                $query->whereHas('person.community', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['community_name'].'%');
+                });
+            }
+
+            if (array_key_exists('sector_name', $filters)) {
+                $query->whereHas('person.sector', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['sector_name'].'%');
+                });
+            }
+
+            if (array_key_exists('street_name', $filters)) {
+                $query->whereHas('person.street', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['street_name'].'%');
+                });
+            }
+
+
+
         }
 
         if ($sort && $order) {

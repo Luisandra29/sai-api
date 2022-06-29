@@ -25,11 +25,11 @@ class SectorController extends Controller
             $filters = $request->filter;
             // Get fields
             if (array_key_exists('name', $filters)) {
-                $query->where(strtolower('name'), 'ilike', '%'.$filters['name'].'%');
+                $query->where('name', 'like', '%'.$filters['name'].'%');
             }
-            if (array_key_exists('community_id', $filters)) {
-                $query->whereHas('communities', function($q) use ($filters) {
-                    $q->where('community_id', $filters['community_id']);
+            if (array_key_exists('community_name', $filters)) {
+                $query->whereHas('community', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['community_name'].'%');
                 });
             }
         }

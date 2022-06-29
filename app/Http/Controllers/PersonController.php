@@ -26,8 +26,48 @@ class PersonController extends Controller
 
         if ($request->has('filter')) {
             $filters = $request->filter;
-            $name = $filters['name'];
-            $query->where(strtolower('name'), 'ilike', '%'.$name.'%');
+
+            if (array_key_exists('name', $filters)) {
+                $query->where('name', 'like', '%'.$filters['name'].'%');
+            }
+
+            if (array_key_exists('dni', $filters)) {
+                $query->where('dni', 'like', '%'.$filters['dni'].'%');
+            }
+
+            if (array_key_exists('phone', $filters)) {
+                $query->where('phone', 'like', '%'.$filters['phone'].'%');
+            }
+
+            if (array_key_exists('position', $filters)) {
+                $query->whereHas('positions', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['position'].'%');
+                });
+            }
+
+            if (array_key_exists('parish_name', $filters)) {
+                $query->whereHas('parish', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['parish_name'].'%');
+                });
+            }
+
+            if (array_key_exists('community_name', $filters)) {
+                $query->whereHas('community', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['community_name'].'%');
+                });
+            }
+
+            if (array_key_exists('sector_name', $filters)) {
+                $query->whereHas('sector', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['sector_name'].'%');
+                });
+            }
+
+            if (array_key_exists('street_name', $filters)) {
+                $query->whereHas('street', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%'.$filters['street_name'].'%');
+                });
+            }
         }
 
         if ($sort && $order) {

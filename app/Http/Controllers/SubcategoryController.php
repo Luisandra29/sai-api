@@ -28,10 +28,12 @@ class SubcategoryController extends Controller
             $filters = $request->filter;
 
             if (array_key_exists('name', $filters)) {
-                $query->where(strtolower('name'), 'ilike', '%'.$filters['name'].'%');
+                $query->where('name', 'like', '%'.$filters['name'].'%');
             }
-            if (array_key_exists('category_id', $filters)) {
-                $query->where('category_id', '=', $filters['category_id']);
+            if (array_key_exists('category_name', $filters)) {
+                $query->whereHas('category', function($q) use ($filters) {
+                    $q->where('name', 'like', '%'.$filters['category_name'].'%');
+                });
             }
         }
 
