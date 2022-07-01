@@ -15,8 +15,22 @@ class PositionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Position::query()->with('people');
+        $query = Position::query()->withCount('people');
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
 
         return $query->paginate($results);
     }

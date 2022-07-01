@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use App\Notifications\SignupActivate;
 use App\Http\Requests\CreateUserRequest;
 use Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -22,7 +24,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest();
+        $query = User::with('roles')->latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -32,7 +34,7 @@ class UserController extends Controller
             if (array_key_exists('user_name', $filters)) {
                 $query->where('login', 'like', '%'.$filters['user_name'].'%');
             }
-            
+
             /*if (array_key_exists('rol', $filters)) {
                 $query->whereHas('role', function ($query) use ($filters) {
                     return $query->whereLike('name', $filters['rol']);
@@ -47,60 +49,24 @@ class UserController extends Controller
         return $query->paginate($results);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        $roles = Rol::get();
-
-        $results = $request->perPage;
-        // return response()->json([
-        //     'roles' => $roles
-        // ]);
-        return $roles->paginate($results);
-    }
-
         /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-    // public function store(CreateUserRequest $request)
     public function store(Request $request)
     {
         $password = Hash::make($request->password);
 
-        // $person = Person::create([
-        //     'dni' => $request->dni,
-        //     'name' => $request->name,
-        //     'address' => $request->address,
-        //     'phone' => $request->phone,
-        //     'community_id' => $request->community_id,
-        //     'parish_id' => $request->parish_id,
-
-        // ]);
         $user = User::create([
-            'email' => $request->email,
+            'login' => $request->login,
             'password' => $password,
-            'activation_token' => Str::random(60),
-            'active' => true,
-            'role_id' => $request->role_id,
+            'active' => true
         ]);
 
-
-        //$user->notify(new SignupActivate($user->activation_token));
-
-        return response()->json([
-            'success' => true,
-            'message' => '¡Usuario creado!'
-        ], 201);
+        return $user;
     }
-
 
     /**
      * Display the specified resource.
@@ -110,44 +76,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $query = $user->load('role');
-
-        return Response($query);
+        return $user->load('roles');
     }
 
-
-    // public function activate($token)
-    // {
-    //     $user = User::where('activation_token', $token)->first();
-
-    //     if (!$user) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => '¡El usuario ya tiene una cuenta activa!'
-    //         ], 404);
-    //     }
-
-    //     $user->active = true;
-    //     $user->activation_token = '';
-    //     $user->save();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => '¡Su cuenta ha sido activada!'
-    //     ]);
-    // }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -158,7 +89,33 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $validator = Validator::make($request->all(), [
+            'login' => [
+                'required',
+                Rule::unique('users')->ignore($user),
+            ],
+        ], [
+            'login.required' => 'Ingrese el nombre de usuario.',
+            'login.unique' => 'El nombre de usuario se encuentra en uso',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $data = [
+            'login' => $request->login
+        ];
+
+        // if ($request->password) {
+        //     $data->password = bcrypt($request->password);
+        // }
+
+        $user->update($data);
+
+        $user->roles()->sync($request->roles);
 
         return $user;
     }
@@ -171,26 +128,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $destroy  = User::find($user->id);
+        $destroy->active=0;
 
-        return $user;
+        $destroy->save();
     }
-
-
-    // public function changeStatus(User $user)
-    // {
-    //     $status = $user->active;
-    //     $user->active = !$status;
-    //     $user->save();
-    //     $message = 'desactivado';
-
-    //     if (!$status) {
-    //         $message = 'activado';
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'El usuario '.$user->profile->fullName.' ha sido '.$message
-    //     ]);
-    // }
-
 }
