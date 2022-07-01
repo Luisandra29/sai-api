@@ -39,26 +39,7 @@ class SectorController extends Controller
         }
 
         return $query->paginate($results);
-
     }
-
-
-     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        $query = Sector::query()->withCount('applications');
-        $results = $request->perPage;
-        $sort = $request->sort;
-        $order = $request->order;
-
-        return $query->paginate($results);
-
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -70,9 +51,7 @@ class SectorController extends Controller
     {
         $sector = Sector::create($request->all());
 
-        //return $sector;
         return response()->json($sector, 201);
-
     }
 
     /**
@@ -83,19 +62,8 @@ class SectorController extends Controller
      */
     public function show(Sector $sector)
     {
-        return $sector->load(['applications'])
+        return $sector->load(['applications', 'community'])
             ->loadCount('applications');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sector $sector)
-    {
-        return $sector->load('communities');
     }
 
     /**
@@ -107,17 +75,7 @@ class SectorController extends Controller
      */
     public function update(Request $request, Sector $sector)
     {
-        // $sector->name = $request->name;
-        // $sector->communities()->sync($request->communities);
-
-        // return response()->json([
-        //     'id' => $user->id,
-        //     'attributes' => $user
-        // ]);
-
         $sector->update($request->all());
-
-        //return $sector;
 
         return response()->json($sector, 201);
 
