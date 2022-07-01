@@ -18,7 +18,6 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        // Check email
         $user = User::where('login', $request->login)->first();
 
         if (!$user) {
@@ -38,20 +37,19 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken(Str::random(20))->plainTextToken;
-        // $permissions = collect($user->roles()->pluck('name'))
-        //     ->merge($user->permissions()->pluck('name'));
+        $token = $user->createToken('qwerty123');
 
-        return response()->json([
-            'user' => $user,
-            'token' => $token
-        ], 201);
+        $user->roles = $user->roles()->pluck('name');
+
+        return [
+            'token' => $token->plainTextToken,
+            'user' => $user
+        ];
     }
 
     public function logout(Request $request)
     {
-        $user = $request->user();
-        $user->tokens()->delete();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'data' => 'Logged out!'

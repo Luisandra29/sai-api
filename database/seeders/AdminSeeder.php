@@ -2,12 +2,17 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class AdminSeeder extends Seeder
 {
+    private $roles = [
+        'admin', 'usuario'
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -15,13 +20,18 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        foreach($this->roles as $role) {
+            Role::create([
+                'name' => $role
+            ]);
+        }
+
+        $user = User::create([
             'login' => 'admin',
             'password' => bcrypt('qwerty123'),
-            'active' => true,
-            'activation_token' => Str::random(60)
-            //'remember_token' => Str::random(10),
-            //'role_id' => 1
+            'active' => true
         ]);
+
+        $user->syncRoles([1]);
     }
 }
