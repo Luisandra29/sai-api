@@ -18,7 +18,7 @@ class SubcategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $query = Subcategory::query()->withCount('applications');
+        $query = Subcategory::query()->with('category')->withCount('applications');
 
         $results = $request->perPage;
         $sort = $request->sort;
