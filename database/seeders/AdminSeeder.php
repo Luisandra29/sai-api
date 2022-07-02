@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 class AdminSeeder extends Seeder
 {
     private $roles = [
-        'admin', 'usuario'
+        'super-admin'
     ];
 
     /**

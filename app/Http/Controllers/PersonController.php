@@ -18,7 +18,9 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Person::query()->withCount('applications')->with('positions');
+        $query = Person::query()
+            ->withCount('applications')
+            ->with('positions');
 
         $results = $request->perPage;
         $sort = $request->sort;
@@ -39,10 +41,8 @@ class PersonController extends Controller
                 $query->where('phone', 'like', '%'.$filters['phone'].'%');
             }
 
-            if (array_key_exists('position', $filters)) {
-                $query->whereHas('positions', function($q) use ($filters) {
-                    $q->where('name', 'like', '%'.$filters['position'].'%');
-                });
+            if (array_key_exists('position_id', $filters)) {
+                $query->where('position_id', '=', $filters['position_id']);
             }
 
             if (array_key_exists('parish_name', $filters)) {
@@ -132,7 +132,7 @@ class PersonController extends Controller
      * @param  \App\Person  $person
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(CreatePersonRequest $request, Person $person)
     {
         $person->update($request->all());

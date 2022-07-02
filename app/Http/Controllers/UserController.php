@@ -66,10 +66,8 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'login' => ['required', 'unique:users'],
-            'password' => 'required',
-            'roles' => 'required'
+            'password' => 'required'
         ], [
-            'roles.required' => 'Seleccione uno o más roles',
             'password.required' => 'Ingrese una contraseña',
             'login.required' => 'Ingrese el nombre de usuario.',
             'login.unique' => 'El nombre de usuario se encuentra en uso',
@@ -81,14 +79,14 @@ class UserController extends Controller
             ], 422);
         }
 
-        $create = User::create([
+        $user = User::create([
             'login' => $request->input('login'),
             'password' => bcrypt($request->input('password'))
         ]);
 
-        $create->roles()->sync($request->roles);
+        $user->roles()->sync($request->roles);
 
-        return $create;
+        return $user;
     }
 
     /**

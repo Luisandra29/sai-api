@@ -14,43 +14,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 Route::post('login', 'AuthController@login');
-Route::post('recover-account', 'PasswordResetController@recover');
-Route::post('reset-password', 'PasswordResetController@resetPassword');
-Route::get('activate-account/{token}', 'UserController@activate');
-
-Route::get('parishes/{parish}/communities', 'ParishController@getCommunities')
-    ->name('parish.communities');
-// Route::resource('users', 'UserController');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    function(Request $request) {
-        return auth()->user();
-    };
+    Route::group(['middleware' => ['role:super-admin']], function () {
+        Route::resource('users', 'UserController');
+        Route::resource('roles', 'RoleController');
+    });
 
     Route::get('logout', 'AuthController@logout');
     Route::get('user', 'AuthController@getUser');
     Route::post('update-password', 'UpdatePasswordController');
-
-    Route::resource('users', 'UserController');
 
     Route::get('states', 'StateController');
     Route::resource('parishes', 'ParishController');
     Route::resource('communities', 'CommunityController');
     Route::resource('sectors', 'SectorController');
     Route::resource('streets', 'StreetController');
-    //Route::post('categories/delete', 'CategoryController@deleteMany');
 
     Route::resource('categories', 'CategoryController');
-    //Route::get('categorias', 'CategoriaController@index');
-    Route::get('roles', 'RoleController@index');
 
     Route::resource('subcategories', 'SubcategoryController');
-
 
     //People
     Route::resource('people', 'PersonController');
