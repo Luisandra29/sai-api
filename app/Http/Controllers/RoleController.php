@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Role::query();
+        $query = Role::latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {

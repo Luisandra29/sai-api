@@ -29,12 +29,20 @@ class UpdatePasswordRequest extends FormRequest
         ];
     }
 
+    public function attributes()
+    {
+        return [
+            'current_password' => 'contraseña actual',
+            'new_password' => 'nueva contraseña'
+        ];
+    }
+
     public function messages()
     {
         return [
-            'current_password.required' => 'Ingrese su contraseña actual',
-            'new_password.required' => 'Ingrese su nueva contraseña',
-            'new_password.min' => 'La nueva contraseña debe ser mayor a 6 caracteres',
+            'current_password.required' => 'Ingrese la :attribute',
+            'new_password.required' => 'Ingrese la :attribute',
+            'new_password.min' => 'La :attribute debe ser mayor a 6 caracteres',
             'new_password.confirmed' => 'Las contraseñas no coinciden'
         ];
     }
