@@ -64,10 +64,8 @@ class ApplicationController extends Controller
                 });
             }
 
-            if (array_key_exists('person_name', $filters)) {
-                $query->whereHas('person', function ($query) use ($filters) {
-                    $query->where('name', 'like', '%'.$filters['person_name'].'%');
-                });
+            if (array_key_exists('person_id', $filters)) {
+                $query->where('person_id', '=', $filters['person_id']);
             }
 
             if (array_key_exists('parish_name', $filters)) {
