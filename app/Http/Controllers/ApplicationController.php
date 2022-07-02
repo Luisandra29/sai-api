@@ -40,8 +40,10 @@ class ApplicationController extends Controller
                     return $query->whereListName($filters['status']);
                 });
             }
-            if (array_key_exists('title', $filters)) {
-                $query->where('title', 'like', '%'.$filters['title'].'%');
+            // Ejemplo de búsqueda global
+            if (array_key_exists('search', $filters)) {
+                $query->whereLike('title', $filters['search'])
+                    ->orWhere('num', 'like', '%'.$filters['search'].'%');
             }
             if (array_key_exists('created_at', $filters)) {
                 $query->where('created_at', 'like', '%'.$filters['created_at'].'%');
@@ -91,9 +93,6 @@ class ApplicationController extends Controller
                     $query->where('name', 'like', '%'.$filters['street_name'].'%');
                 });
             }
-
-
-
         }
 
         if ($sort && $order) {
@@ -234,6 +233,6 @@ class ApplicationController extends Controller
             ]);
         }
 
-        
+
     }
 }
