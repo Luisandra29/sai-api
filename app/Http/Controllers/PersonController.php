@@ -29,8 +29,9 @@ class PersonController extends Controller
         if ($request->has('filter')) {
             $filters = $request->filter;
 
-            if (array_key_exists('name', $filters)) {
-                $query->where('name', 'like', '%'.$filters['name'].'%');
+            if (array_key_exists('search', $filters)) {
+                $query->whereLike('name', $filters['search'])
+                    ->orWhere('dni', 'like', '%'.$filters['search'].'%');
             }
 
             if (array_key_exists('dni', $filters)) {
