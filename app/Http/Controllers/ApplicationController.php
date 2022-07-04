@@ -140,7 +140,7 @@ class ApplicationController extends Controller
 
         $user_id = Auth::user()->id;
 
-        Application::create([
+        $model = Application::create([
             'title' => $request->title,
             'description' => $request->description,
             'num' => $num,
@@ -151,10 +151,7 @@ class ApplicationController extends Controller
             'user_id' => $user_id
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => '¡Solicitud recibida!'
-        ]);
+        return $model;
     }
 
     /**
