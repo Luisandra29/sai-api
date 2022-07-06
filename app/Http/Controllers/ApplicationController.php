@@ -97,6 +97,45 @@ class ApplicationController extends Controller
             $query->orderBy($sort, $order);
         }
 
+        if ($request->subcategory_id) {
+            $query->where('subcategory_id', $request->subcategory_id);
+        }
+
+        if ($request->category_id) {
+            $query->whereHas('subcategory.category', function ($query) use ($request){
+                $query->where('id', $request->category_id);
+            });
+        }
+
+        if ($request->parish_id) {
+            $query->whereHas('person.parish', function ($query) use ($request){
+                $query->where('id', $request->parish_id);
+            });
+        }
+
+        if ($request->community_id) {
+            $query->whereHas('person.community', function ($query) use ($request){
+                $query->where('id', $request->community_id);
+            });
+        }
+
+        if ($request->sector_id) {
+            $query->whereHas('person.sector', function ($query) use ($request){
+                $query->where('id', $request->sector_id);
+            });
+        }
+
+        if ($request->street_id) {
+            $query->whereHas('person.street', function ($query) use ($request){
+                $query->where('id', $request->street_id);
+            });
+        }
+
+        if ($request->state_id) {
+            $query->where('state_id', $request->state_id);
+        }
+
+
         if ($request->get('type')) {
             return $this->report($query);
         }
