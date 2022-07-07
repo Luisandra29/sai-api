@@ -21,7 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'password',
-        'activation_token'
+        'activation_token',
+        'entity_id'
     ];
 
     /**
@@ -49,6 +50,11 @@ class User extends Authenticatable
     public function applications()
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function entity()
+    {
+        return $this->belongsTo(Entity::class);
     }
 
 }
