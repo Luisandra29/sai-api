@@ -23,7 +23,8 @@ class Application extends Model
         'state_id',
         'person_id',
         'user_id',
-        'approved_at'
+        'approved_at',
+        'dismissed_at'
     ];
 
 
