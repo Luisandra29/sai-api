@@ -131,22 +131,7 @@ class ApplicationController extends Controller
         return $pdf->download('reporte-solicitudes.pdf');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        return Category::get()->toArray();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateApplicationRequest $request)
     {
         $num = Application::getNewNum();
@@ -178,35 +163,47 @@ class ApplicationController extends Controller
         return Response($application->load(['subcategory', 'state', 'person']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Application $application)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Application  $application
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Application $application)
     {
-        $application->approved_at = Carbon::now();
-        $application->state_id = 2;
-        $application->save();
+        $currDate = Carbon::now();
 
-        return Response([
-            'success' => true,
-            'message' => '¡La solicitud '.'#'.$application->num.' fue aprobada!'
-        ]);
+        $state = $application->state_id;
+
+        if($state == '1'){
+
+            if ($request->status == 'APROBADO') {
+                $application->update([
+                    'state_id' => 2,
+                    'approved_at' => $currDate  
+                ]);
+            }
+            elseif ($request->status == 'RECHAZADO') {
+
+                $application->update([
+                    'state_id' => 3,
+                    'dismissed_at' => $currDate 
+                ]);
+            }
+
+            return $application;
+    
+        }
+        elseif($state == '2'){
+            return Response([
+                'success' => false,
+                'message' => 'La solicitud ya ha sido aprobada'
+            ]);
+
+        }
+        elseif($state == '3'){
+            return Response([
+                'success' => false,
+                'message' => 'La solicitud ya ha sido rechazada'
+            ]);
+        }
     }
+
 
     public function download(Application $application)
     {
@@ -218,29 +215,5 @@ class ApplicationController extends Controller
         return $pdf->download('certificado.pdf');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Application $application)
-    {
-        if ($application->state_id == 2) {
-            return Response([
-                'success' => false,
-                'message' => 'Las solicitudes aprobadas no pueden ser borradas'
-            ]);
-        }
-        else{
-            $application->update([ 'state_id' => 3 ]);
 
-            return Response([
-            'success' => true,
-            'message' => '¡Ha rechazado la solicitud #'.$application->num.'!'
-            ]);
-        }
-
-
-    }
 }
