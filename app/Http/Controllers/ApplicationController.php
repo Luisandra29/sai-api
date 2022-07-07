@@ -29,7 +29,7 @@ class ApplicationController extends Controller
         $user = $request->user();
 
         $query = Application::withTrashed()
-            ->latest()
+            ->orderBy('state_id', 'ASC')
             ->with('person', 'subcategory', 'user', 'state');
 
         if ($request->has('filter')) {
@@ -160,7 +160,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return Response($application->load(['subcategory', 'state', 'person']));
+        return $application->load(['subcategory', 'state', 'person']);
     }
 
 
@@ -173,18 +173,15 @@ class ApplicationController extends Controller
 
             if ($request->status == 'APROBADO') {
                 $application->update([
-                    'state_id' => 2 
+                    'state_id' => 2
                 ]);
-            }
-            elseif ($request->status == 'RECHAZADO') {
-
+            } elseif ($request->status == 'RECHAZADO') {
                 $application->update([
                     'state_id' => 3
                 ]);
             }
 
-            return $application;
-    
+            return $application->load(['subcategory', 'state', 'person']);
         }
         elseif($state == '2'){
             return Response([
