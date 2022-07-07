@@ -166,7 +166,6 @@ class ApplicationController extends Controller
 
     public function update(Request $request, Application $application)
     {
-        $currDate = Carbon::now();
 
         $state = $application->state_id;
 
@@ -174,15 +173,13 @@ class ApplicationController extends Controller
 
             if ($request->status == 'APROBADO') {
                 $application->update([
-                    'state_id' => 2,
-                    'approved_at' => $currDate  
+                    'state_id' => 2 
                 ]);
             }
             elseif ($request->status == 'RECHAZADO') {
 
                 $application->update([
-                    'state_id' => 3,
-                    'dismissed_at' => $currDate 
+                    'state_id' => 3
                 ]);
             }
 
