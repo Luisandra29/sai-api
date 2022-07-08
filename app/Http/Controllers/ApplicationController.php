@@ -40,6 +40,11 @@ class ApplicationController extends Controller
                     return $query->whereListName($filters['status']);
                 });
             }
+            if (array_key_exists('person_id', $filters)) {
+                $query->whereHas('person', function ($query) use ($filters) {
+                    $query->where('person_id', $filters['person_id']);
+                });
+            }
             // Ejemplo de búsqueda global
             if (array_key_exists('search', $filters)) {
                 $query->whereLike('title', $filters['search'])
