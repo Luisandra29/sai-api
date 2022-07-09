@@ -52,5 +52,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Positions
     Route::resource('positions', 'PositionController');
+
+    //Entities
+    Route::resource('entities', 'EntityController');
 });
 
