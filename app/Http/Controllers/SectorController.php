@@ -27,10 +27,8 @@ class SectorController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->where('name', 'like', '%'.$filters['name'].'%');
             }
-            if (array_key_exists('community_name', $filters)) {
-                $query->whereHas('community', function($q) use ($filters) {
-                    $q->where('name', 'like', '%'.$filters['community_name'].'%');
-                });
+            if (array_key_exists('community_id', $filters)) {
+                $query->where('community_id', $filters['community_id']);
             }
         }
 
@@ -78,7 +76,6 @@ class SectorController extends Controller
         $sector->update($request->all());
 
         return response()->json($sector, 201);
-
     }
 
     /**

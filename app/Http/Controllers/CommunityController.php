@@ -27,6 +27,11 @@ class CommunityController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->where('name', 'like', '%'.$filters['name'].'%');
             }
+            if (array_key_exists('parish_id', $filters)) {
+                $query->whereHas('parishes', function ($query) use ($filters) {
+                    return $query->where('parish_id', $filters['parish_id']);
+                });
+            }
             if (array_key_exists('parish_names', $filters)) {
                 $query->whereHas('parishes', function($q) use ($filters) {
                     $q->where('parishes.name', 'like', '%'.$filters['parish_names'].'%');
