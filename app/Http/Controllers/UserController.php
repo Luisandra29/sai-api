@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest();
+        $query = User::latest()->with('entity');
         $results = $request->perPage;
         $filters = $request->has('filter') ? $request->filter : [];
         $sort = $request->sort;
