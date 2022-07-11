@@ -26,6 +26,11 @@ class StreetController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->where('name', 'like', '%'.$filters['name'].'%');
             }
+            if (array_key_exists('sector_id', $filters)) {
+                $query->whereHas('sectors', function ($query) use ($filters) {
+                    $query->where('sector_id', $filters['sector_id']);
+                });
+            }
             if (array_key_exists('sector_name', $filters)) {
                 $query->whereHas('sectors', function($q) use ($filters) {
                     $q->where('name', 'like', '%'.$filters['sector_name'].'%');
