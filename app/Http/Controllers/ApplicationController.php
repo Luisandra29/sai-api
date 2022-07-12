@@ -112,7 +112,11 @@ class ApplicationController extends Controller
             $query->orderBy($sort, $order);
         }
 
-        if ($request->get('type')) {
+        /*if ($request->get('type')) {
+            return $this->report($query);
+        }*/
+
+        if ($request->type == 'pdf') {
             return $this->report($query);
         }
 
@@ -127,9 +131,9 @@ class ApplicationController extends Controller
         $total = $query->count();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
-        $data = compact(['applications', 'emissionDate', 'total', 'listName']);
+        //$data = compact(['applications', 'emissionDate', 'total', 'listName']);
 
-        $pdf = PDF::loadView('pdf.report', $data);
+        $pdf = PDF::loadView('pdf.report', compact(['applications', 'emissionDate', 'total', 'listName']));
         return $pdf->download('reporte-solicitudes.pdf');
     }
 

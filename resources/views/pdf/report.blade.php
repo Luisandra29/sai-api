@@ -88,16 +88,32 @@
         </div>
 
         <div class="tables">
+            <caption style="float:right;">Nº DE SOLICITUDES {{ $total }}</caption>
+            <br>
            <table style="text-align: center">
                 <caption>REPORTE DE SOLICITUDES {{ $listName }}</caption>
                 <thead>
                   <tr>
+                    <th width="5%">#</th>
                     <th width="10%">NO. SOLICITUD</th>
-                    <th width="75%">TÍTULO</th>
+                    <th width="30%">TÍTULO</th>
+                    <th width="30%">SOLICITANTE</th>
+                    <th width="10%">C.I</th>
                     <th width="15%">CATEGORÍA</th>
                   </tr>
                 </thead>
                 <tbody>
+                    @foreach($applications as $index => $application)
+                           <tr>
+                           <td>{{ $index + 1 }}</td>
+                           <td>{{ $application->num }}</td>
+                           <td>{{ $application->title }}</td>
+                           <td>{{ $application->person->name }}</td>
+                           <td>{{ $application->person->dni }}</td>
+                           <td>{{ $application->subcategory->name }}</td>
+                       </tr>
+                       @endforeach
+                </tbody>
              </table>
             <br>
             <div class="bill-info">
