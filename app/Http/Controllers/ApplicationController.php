@@ -29,8 +29,8 @@ class ApplicationController extends Controller
         $user = $request->user();
 
         $query = Application::withTrashed()
-            ->latest()
-            ->with('person', 'subcategory', 'user', 'state');
+            ->orderBy('state_id', 'ASC')
+            ->with('person', 'subcategory', 'user', 'state', 'person.positions');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -39,6 +39,9 @@ class ApplicationController extends Controller
                 $query->whereHas('state', function ($query) use ($filters) {
                     return $query->whereListName($filters['status']);
                 });
+            }
+            if (array_key_exists('person_id', $filters)) {
+                $query->where('person_id', $filters['person_id']); 
             }
             // Ejemplo de búsqueda global
             if (array_key_exists('search', $filters)) {
@@ -66,51 +69,54 @@ class ApplicationController extends Controller
                         $q->where('name', 'like', '%'.$filters['search'].'%');
                     });
             }
+
+            if (array_key_exists('state_id', $filters)) {
+                $query->where('state_id', $filters['state_id']); 
+            }
+            if (array_key_exists('subcategory_id', $filters)) {
+                $query->where('subcategory_id', $filters['subcategory_id']); 
+            }
+            if (array_key_exists('category_id', $filters)) {
+                $query->whereHas('subcategory.category', function($q) use ($filters) {
+                    $q->where('id', $filters['category_id']);
+                });
+            }
+            if (array_key_exists('parish_id', $filters)) {
+                $query->whereHas('person.parish', function($q) use ($filters) {
+                    $q->where('id', $filters['parish_id']);
+                });
+            }
+            if (array_key_exists('community_id', $filters)) {
+                $query->whereHas('person.community', function($q) use ($filters) {
+                    $q->where('id', $filters['community_id']);
+                });
+            }
+            if (array_key_exists('sector_id', $filters)) {
+                $query->whereHas('person.sector', function($q) use ($filters) {
+                    $q->where('id', $filters['sector_id']);
+                });
+            }
+            if (array_key_exists('street_id', $filters)) {
+                $query->whereHas('person.street', function($q) use ($filters) {
+                    $q->where('id', $filters['street_id']);
+                });
+            }
+            if (array_key_exists('position_id', $filters)) {
+                $query->whereHas('person.positions', function ($query) use ($filters) {
+                    $query->where('position_id', $filters['position_id']);
+                });
+            }  
         }
 
         if ($sort && $order) {
             $query->orderBy($sort, $order);
         }
 
-        if ($request->subcategory_id) {
-            $query->where('subcategory_id', $request->subcategory_id);
-        }
+        /*if ($request->get('type')) {
+            return $this->report($query);
+        }*/
 
-        if ($request->category_id) {
-            $query->whereHas('subcategory.category', function ($query) use ($request){
-                $query->where('id', $request->category_id);
-            });
-        }
-
-        if ($request->parish_id) {
-            $query->whereHas('person.parish', function ($query) use ($request){
-                $query->where('id', $request->parish_id);
-            });
-        }
-
-        if ($request->community_id) {
-            $query->whereHas('person.community', function ($query) use ($request){
-                $query->where('id', $request->community_id);
-            });
-        }
-
-        if ($request->sector_id) {
-            $query->whereHas('person.sector', function ($query) use ($request){
-                $query->where('id', $request->sector_id);
-            });
-        }
-
-        if ($request->street_id) {
-            $query->whereHas('person.street', function ($query) use ($request){
-                $query->where('id', $request->street_id);
-            });
-        }
-        if ($request->state_id) {
-            $query->where('state_id', $request->state_id);
-        }
-
-
-        if ($request->get('type')) {
+        if ($request->type == 'pdf') {
             return $this->report($query);
         }
 
@@ -125,28 +131,13 @@ class ApplicationController extends Controller
         $total = $query->count();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
-        $data = compact(['applications', 'emissionDate', 'total', 'listName']);
+        //$data = compact(['applications', 'emissionDate', 'total', 'listName']);
 
-        $pdf = PDF::loadView('pdf.report', $data);
+        $pdf = PDF::loadView('pdf.report', compact(['applications', 'emissionDate', 'total', 'listName']));
         return $pdf->download('reporte-solicitudes.pdf');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        return Category::get()->toArray();
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateApplicationRequest $request)
     {
         $num = Application::getNewNum();
@@ -175,38 +166,44 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return Response($application->load(['subcategory', 'state', 'person']));
+        return $application->load(['subcategory', 'state', 'person']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Application $application)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Application  $application
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Application $application)
     {
-        $application->approved_at = Carbon::now();
-        $application->state_id = 2;
-        $application->save();
 
-        return Response([
-            'success' => true,
-            'message' => '¡La solicitud '.'#'.$application->num.' fue aprobada!'
-        ]);
+        $state = $application->state_id;
+
+        if($state == '1'){
+
+            if ($request->status == 'APROBADO') {
+                $application->update([
+                    'state_id' => 2
+                ]);
+            } elseif ($request->status == 'RECHAZADO') {
+                $application->update([
+                    'state_id' => 3
+                ]);
+            }
+
+            return $application->load(['subcategory', 'state', 'person']);
+        }
+        elseif($state == '2'){
+            return Response([
+                'success' => false,
+                'message' => 'La solicitud ya ha sido aprobada'
+            ]);
+
+        }
+        elseif($state == '3'){
+            return Response([
+                'success' => false,
+                'message' => 'La solicitud ya ha sido rechazada'
+            ]);
+        }
     }
+
 
     public function download(Application $application)
     {
@@ -218,29 +215,5 @@ class ApplicationController extends Controller
         return $pdf->download('certificado.pdf');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Application $application)
-    {
-        if ($application->state_id == 2) {
-            return Response([
-                'success' => false,
-                'message' => 'Las solicitudes aprobadas no pueden ser borradas'
-            ]);
-        }
-        else{
-            $application->update([ 'state_id' => 3 ]);
 
-            return Response([
-            'success' => true,
-            'message' => '¡Ha rechazado la solicitud #'.$application->num.'!'
-            ]);
-        }
-
-
-    }
 }

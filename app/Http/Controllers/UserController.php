@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest();
+        $query = User::latest()->with('entity');
         $results = $request->perPage;
         $filters = $request->has('filter') ? $request->filter : [];
         $sort = $request->sort;
@@ -81,7 +81,8 @@ class UserController extends Controller
 
         $user = User::create([
             'login' => $request->input('login'),
-            'password' => bcrypt($request->input('password'))
+            'password' => bcrypt($request->input('password')),
+            'entity_id' => $request->input('entity_id')
         ]);
 
         $user->roles()->sync($request->roles);

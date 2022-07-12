@@ -22,8 +22,7 @@ class Application extends Model
         'subcategory_id',
         'state_id',
         'person_id',
-        'user_id',
-        'approved_at'
+        'user_id'
     ];
 
 
