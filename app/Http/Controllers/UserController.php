@@ -66,8 +66,10 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'login' => ['required', 'unique:users'],
-            'password' => 'required'
+            'password' => 'required',
+            'entity_id' => 'required'
         ], [
+            'entity_id.required' => 'Seleccione una dependencia.',
             'password.required' => 'Ingrese una contraseña',
             'login.required' => 'Ingrese el nombre de usuario.',
             'login.unique' => 'El nombre de usuario se encuentra en uso',
@@ -115,7 +117,9 @@ class UserController extends Controller
                 'required',
                 Rule::unique('users')->ignore($user),
             ],
+            'entity_id' => 'required'
         ], [
+            'entity_id.required' => 'Seleccione una dependencia.',
             'login.required' => 'Ingrese el nombre de usuario.',
             'login.unique' => 'El nombre de usuario se encuentra en uso',
         ]);
@@ -127,7 +131,8 @@ class UserController extends Controller
         }
 
         $data = [
-            'login' => $request->login
+            'login' => $request->login,
+            'entity_id' => $request->entity_id
         ];
 
         if ($request->password) {
