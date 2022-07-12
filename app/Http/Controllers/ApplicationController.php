@@ -30,7 +30,7 @@ class ApplicationController extends Controller
 
         $query = Application::withTrashed()
             ->orderBy('state_id', 'ASC')
-            ->with('person', 'subcategory', 'user', 'state');
+            ->with('person', 'subcategory', 'user', 'state', 'person.positions');
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -41,9 +41,7 @@ class ApplicationController extends Controller
                 });
             }
             if (array_key_exists('person_id', $filters)) {
-                $query->whereHas('person', function ($query) use ($filters) {
-                    $query->where('person_id', $filters['person_id']);
-                });
+                $query->where('person_id', $filters['person_id']); 
             }
             // Ejemplo de búsqueda global
             if (array_key_exists('search', $filters)) {
@@ -69,28 +67,45 @@ class ApplicationController extends Controller
                     })
                     ->orWhereHas('person.street', function ($q) use ($filters) {
                         $q->where('name', 'like', '%'.$filters['search'].'%');
-                    })
-
-                    ->orWhere('state_id', $filters['search'])
-
-                    ->orWhere('subcategory_id', $filters['search'])
-
-                    ->orWhereHas('subcategory.category', function($q) use ($filters) {
-                        $q->where('id', $filters['search']);
-                    })
-                    ->orWhereHas('person.parish', function ($q) use ($filters) {
-                        $q->where('id', $filters['search']);
-                    })
-                    ->orWhereHas('person.community', function ($q) use ($filters) {
-                        $q->where('id', $filters['search']);
-                    })
-                    ->orWhereHas('person.sector', function ($q) use ($filters) {
-                        $q->where('id', $filters['search']);
-                    })
-                    ->orWhereHas('person.street', function ($q) use ($filters) {
-                        $q->where('id', $filters['search']);
                     });
             }
+
+            if (array_key_exists('state_id', $filters)) {
+                $query->where('state_id', $filters['state_id']); 
+            }
+            if (array_key_exists('subcategory_id', $filters)) {
+                $query->where('subcategory_id', $filters['subcategory_id']); 
+            }
+            if (array_key_exists('category_id', $filters)) {
+                $query->whereHas('subcategory.category', function($q) use ($filters) {
+                    $q->where('id', $filters['category_id']);
+                });
+            }
+            if (array_key_exists('parish_id', $filters)) {
+                $query->whereHas('person.parish', function($q) use ($filters) {
+                    $q->where('id', $filters['parish_id']);
+                });
+            }
+            if (array_key_exists('community_id', $filters)) {
+                $query->whereHas('person.community', function($q) use ($filters) {
+                    $q->where('id', $filters['community_id']);
+                });
+            }
+            if (array_key_exists('sector_id', $filters)) {
+                $query->whereHas('person.sector', function($q) use ($filters) {
+                    $q->where('id', $filters['sector_id']);
+                });
+            }
+            if (array_key_exists('street_id', $filters)) {
+                $query->whereHas('person.street', function($q) use ($filters) {
+                    $q->where('id', $filters['street_id']);
+                });
+            }
+            if (array_key_exists('position_id', $filters)) {
+                $query->whereHas('person.positions', function ($query) use ($filters) {
+                    $query->where('position_id', $filters['position_id']);
+                });
+            }  
         }
 
         if ($sort && $order) {
