@@ -100,6 +100,10 @@ class PersonController extends Controller
 
         $person->positions()->sync($request->positions);
 
+        if($request->institution){
+            $person->institutions()->sync($request->institution);
+        }
+
         return $person;
     }
 
@@ -111,7 +115,7 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-        return $person->load(['applications', 'positions'])
+        return $person->load(['applications', 'positions', 'institutions'])
         ->loadCount('applications');
     }
 

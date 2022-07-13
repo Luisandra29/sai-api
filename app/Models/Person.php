@@ -61,5 +61,10 @@ class Person extends Model
         return $this->belongsToMany(Position::class, 'person_position');
     }
 
+    public function institutions()
+    {
+        return $this->belongsToMany(Institution::class, 'person_institution');
+    }
+
 
 }

@@ -55,5 +55,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Entities
     Route::resource('entities', 'EntityController');
+
+    //Institutions
+    Route::resource('institutions', 'InstitutionController');
+
 });
 
