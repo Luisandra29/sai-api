@@ -18,8 +18,19 @@
             .header div {
                 display: inline-block;
             }
-            #mayorLOGO {
+            .heading{
+                text-align: center;
+                font-size: 12px;
+                margin-right: -3px;
+                margin-left: 35px;
+
+
+            }
+            #entesLOGO {
                 float: right;
+                margin-top: -3px;
+                margin-left: -7px;
+                z-index: 2;
             }
             table, td, th {
                 border: 1px #000 solid;
@@ -42,6 +53,7 @@
             }
             .tables {
                 display:block;
+                text-align: center;
             }
             .bill-info {
                 width: 100%;
@@ -70,31 +82,33 @@
     </head>
 
     <body>
-        <div class="header">
-            <div class="description">
-                <div style="float:left; padding-right: 20px;">
-                    <img src="{{ base_path().'/public/images/logoAlcaldia.png' }}" height="65px" width="85px" alt="logo" />
+
+        <div class="container">
+            <div class="header">
+                <div class="alcLOGO">
+                    <img src="{{ base_path().'/public/images/logoAlcaldia.png' }}" height="90px" width="180px" alt="sumatlogo"/>
+
                 </div>
-               <p>
+                <div class="heading">
+                <p>
                     REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
                     ALCALDÍA BOLIVARIANA DEL MUNICIPIO BERMÚDEZ<br>
                     DESPACHO DE LA ALCALDÍA BOLIVARIANA DEL MUNICIPIO BERMÚDEZ<br>
                     ESTADO SUCRE - MUNICIPIO BERMÚDEZ<br>
                 </p>
+                </div>
+                <div id="entesLOGO">
+                    <img src="{{ base_path().'/public/images/DTI.png' }}" height="80px" width="90px" alt="logo" />
+                    <img src="{{ base_path().'/public/images/fundLogo.png' }}" height="90px" width="140px" alt="logo" />
+                </div>
             </div>
-            <div id="mayorLOGO">
-                <img src="{{ base_path().'/public/images/DTI.png' }}" height="60px" width="80px" alt="logo" />
-                <img src="{{ base_path().'/public/images/fundLogo.png' }}" height="60px" width="80px" alt="logo" />
 
-            </div>
-        </div>
-
+        <p>Nº DE SOLICITUDES: <b>{{ $total }}</b></p>
         <div class="tables">
-            <caption style="float:right;">Nº DE SOLICITUDES {{ $total }}</caption>
+            <caption>REPORTE DE SOLICITUDES</caption>
             <br>
-           <table style="text-align: center">
-                <caption>REPORTE DE SOLICITUDES {{ $listName }}</caption>
-                <thead>
+            <table style="text-align: center">
+                <tbody>
                   <tr>
                     <th width="30%">SOLICITANTE</th>
                     <th width="10%">C.I</th>
@@ -102,8 +116,6 @@
                     <th width="10%">NO. SOLICITUD</th>
                     <th width="15%">SUBCATEGORÍA</th>
                   </tr>
-                </thead>
-                <tbody>
                     @foreach($applications as $index => $application)
                         <tr>
                            <td>{{ $application->person->name }}</td>
@@ -112,9 +124,9 @@
                            <td>{{ $application->num }}</td>
                            <td>{{ $application->subcategory->name }}</td>
                        </tr>
-                       @endforeach
+                    @endforeach
                 </tbody>
-             </table>
+            </table>
             <br>
             <div class="bill-info">
                 <div class="col-bill-info">
@@ -122,5 +134,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </body>
 </html>

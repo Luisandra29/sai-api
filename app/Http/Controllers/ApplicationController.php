@@ -105,6 +105,12 @@ class ApplicationController extends Controller
                 $query->whereHas('person.positions', function ($query) use ($filters) {
                     $query->where('position_id', $filters['position_id']);
                 });
+            }
+            if (array_key_exists('start_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('finish_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
             }  
         }
 
