@@ -41,7 +41,7 @@ class ApplicationController extends Controller
                 });
             }
             if (array_key_exists('person_id', $filters)) {
-                $query->where('person_id', $filters['person_id']); 
+                $query->where('person_id', $filters['person_id']);
             }
             // Ejemplo de búsqueda global
             if (array_key_exists('search', $filters)) {
@@ -71,10 +71,10 @@ class ApplicationController extends Controller
             }
 
             if (array_key_exists('state_id', $filters)) {
-                $query->where('state_id', $filters['state_id']); 
+                $query->where('state_id', $filters['state_id']);
             }
             if (array_key_exists('subcategory_id', $filters)) {
-                $query->where('subcategory_id', $filters['subcategory_id']); 
+                $query->where('subcategory_id', $filters['subcategory_id']);
             }
             if (array_key_exists('category_id', $filters)) {
                 $query->whereHas('subcategory.category', function($q) use ($filters) {
@@ -111,7 +111,7 @@ class ApplicationController extends Controller
             }
             if (array_key_exists('finish_date', $filters)) {
                 $query->whereDate('created_at', '<', $filters['lt_date']);
-            }  
+            }
         }
 
         if ($sort && $order) {
@@ -127,7 +127,6 @@ class ApplicationController extends Controller
         }
 
         return $query->paginate($results);
-
     }
 
     public function report($query, $request)

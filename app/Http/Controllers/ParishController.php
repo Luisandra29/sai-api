@@ -18,7 +18,7 @@ class ParishController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Parish::query();
+        $query = Parish::query()->withCount('applications');
         $results = $request->perPage;
 
         return $query->paginate($results);
@@ -67,7 +67,7 @@ class ParishController extends Controller
     public function report(Parish $parish)
     {
         $area = Parish::query()->where('id', $parish->id)->with('communities')->first();
-        
+
         $name= $area->name;
 
         $title= 'PARROQUIA';

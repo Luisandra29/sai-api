@@ -30,10 +30,8 @@ class SubcategoryController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->where('name', 'like', '%'.$filters['name'].'%');
             }
-            if (array_key_exists('category_name', $filters)) {
-                $query->whereHas('category', function($q) use ($filters) {
-                    $q->where('name', 'like', '%'.$filters['category_name'].'%');
-                });
+            if (array_key_exists('category_id', $filters)) {
+                $query->where('category_id', $filters['category_id']);
             }
         }
 

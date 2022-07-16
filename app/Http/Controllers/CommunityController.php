@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class CommunityController extends Controller
 {
-/**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -108,7 +108,7 @@ class CommunityController extends Controller
     public function report(Community $community)
     {
         $area = Community::query()->where('id', $community->id)->with('sectors')->first();
-        
+
         $name= $area->name;
 
         $title= 'COMUNIDAD';
