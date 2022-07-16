@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parish;
+use App\Models\Person;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateParishRequest;
+use PDF;
+use Carbon\Carbon;
 
 class ParishController extends Controller
 {
@@ -57,5 +60,27 @@ class ParishController extends Controller
         $parish->delete();
 
         return $parish;
+    }
+
+
+
+    public function report(Parish $parish)
+    {
+        $area = Parish::query()->where('id', $parish->id)->with('communities')->first();
+        
+        $name= $area->name;
+
+        $title= 'PARROQUIA';
+
+        $subTitle= 'COMUNIDADES';
+
+        $subAreas= $area->communities;
+
+        $total = $subAreas->count();
+
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $pdf = PDF::loadView('pdf.report-area', compact(['subAreas', 'emissionDate', 'total', 'name', 'title', 'subTitle']));
+        return $pdf->download('reporte-parroquia.pdf');
     }
 }
