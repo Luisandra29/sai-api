@@ -22,9 +22,7 @@
                 text-align: center;
                 font-size: 12px;
                 margin-right: -3px;
-                margin-left: 35px;
-
-
+                margin-left: 70px;
             }
             #entesLOGO {
                 float: right;
@@ -86,7 +84,7 @@
         <div class="container">
             <div class="header">
                 <div class="alcLOGO">
-                    <img src="{{ base_path().'/public/images/logoAlcaldia.png' }}" height="90px" width="180px" alt="sumatlogo"/>
+                    <img src="{{ base_path().'/public/images/logoAlcaldia.png' }}" height="110px" width="150px" alt="sumatlogo"/>
 
                 </div>
                 <div class="heading">
@@ -105,7 +103,12 @@
 
         <p>Nº DE SOLICITUDES: <b>{{ $total }}</b></p>
         <div class="tables">
-            <caption>REPORTE DE SOLICITUDES</caption>
+            @if($title)
+                <caption>REPORTE DE SOLICITUDES CORRESPONDIENTE A <span style="text-transform:uppercase"><b>{{ $title }}</b></span></caption>
+            
+            @else
+                <caption>REPORTE DE SOLICITUDES</caption>
+            @endif
             <br>
             <table style="text-align: center">
                 <tbody>
@@ -113,7 +116,7 @@
                     <th width="30%">SOLICITANTE</th>
                     <th width="10%">C.I</th>
                     <th width="30%">ASUNTO</th>
-                    <th width="10%">NO. SOLICITUD</th>
+                    <th width="10%">Nº. SOLICITUD</th>
                     <th width="15%">SUBCATEGORÍA</th>
                   </tr>
                     @foreach($applications as $index => $application)

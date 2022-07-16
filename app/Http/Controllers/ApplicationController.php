@@ -123,23 +123,23 @@ class ApplicationController extends Controller
         }*/
 
         if ($request->type == 'pdf') {
-            return $this->report($query);
+            return $this->report($query, $request);
         }
 
         return $query->paginate($results);
 
     }
 
-    public function report($query)
+    public function report($query, $request)
     {
         $applications = $query->get();
         $listName = strtoupper($applications->first()->state->list_name);
         $total = $query->count();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
-        //$data = compact(['applications', 'emissionDate', 'total', 'listName']);
+        $title = $request->has('title') ? $request->title : '';
 
-        $pdf = PDF::loadView('pdf.report', compact(['applications', 'emissionDate', 'total', 'listName']));
+        $pdf = PDF::loadView('pdf.report', compact(['applications', 'emissionDate', 'total', 'listName', 'title']));
         return $pdf->download('reporte-solicitudes.pdf');
     }
 
