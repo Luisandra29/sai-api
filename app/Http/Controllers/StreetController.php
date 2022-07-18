@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Street;
 use App\Http\Requests\CreateStreetRequest;
+use PDF;
+use Carbon\Carbon;
 
 class StreetController extends Controller
 {
@@ -123,5 +125,23 @@ class StreetController extends Controller
         $street->delete();
 
         return response()->json($street, 201);
+    }
+
+    public function report(Street $street)
+    {
+        $area = Street::query()->where('id', $street->id)->first();
+        
+        $name= $area->name;
+
+        $title= 'CALLE';
+
+        $subTitle= 'PERSONAS';
+
+        $total = $area->people->count();
+
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $pdf = PDF::loadView('pdf.report-street', compact(['area', 'emissionDate', 'total', 'name', 'title', 'subTitle']));
+        return $pdf->download('reporte-calle.pdf');
     }
 }

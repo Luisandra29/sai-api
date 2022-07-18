@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Reporte de solicitudes </title>
+        <title> REPORTE DE {{ $title }} </title>
         <style>
            body {
                 font-family: 'Helvetica';
@@ -101,33 +101,27 @@
                 </div>
             </div>
 
-        <p>Nº DE SOLICITUDES: <b>{{ $total }}</b></p>
+        <p>CANTIDAD DE {{ $subTitle }}: <b>{{ $total }}</b></p>
         <div class="tables">
-            @if($title)
-                <caption>REPORTE DE SOLICITUDES CORRESPONDIENTE A <span style="text-transform:uppercase"><b>{{ $title }}</b></span></caption>
-            
-            @else
-                <caption>REPORTE DE SOLICITUDES</caption>
-            @endif
+
+            <caption>REPORTE DE {{ $title }} <span style="text-transform:uppercase"><b>{{ $name }}</b></span></caption>
+
             <br>
             <table style="text-align: center">
                 <tbody>
                   <tr>
-                    <th width="30%">SOLICITANTE</th>
-                    <th width="10%">C.I</th>
-                    <th width="30%">ASUNTO</th>
-                    <th width="10%">Nº. SOLICITUD</th>
-                    <th width="15%">SUBCATEGORÍA</th>
+                    <th width="60%">{{$subTitle}}</th>
+                    <th width="40%">CANTIDAD DE PERSONAS</th>
+
                   </tr>
-                    @foreach($applications as $index => $application)
-                        <tr>
-                           <td>{{ $application->person->name }}</td>
-                           <td>{{ $application->person->dni }}</td>
-                           <td>{{ $application->title }}</td>
-                           <td>{{ $application->num }}</td>
-                           <td>{{ $application->subcategory->name }}</td>
-                       </tr>
-                    @endforeach
+
+                  @foreach($subAreas as $index => $subArea)
+                      <tr>
+                         <td>{{ $subArea->name }}</td>
+                         <td>{{ $subArea->people->count() }}</td>
+                     </tr>
+                  @endforeach
+                 
                 </tbody>
             </table>
             <br>

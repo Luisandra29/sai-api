@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sector;
+use PDF;
+use Carbon\Carbon;
 
 
 class SectorController extends Controller
@@ -94,6 +96,26 @@ class SectorController extends Controller
 
         //return response()->json($sector, 201);
 
+    }
+
+    public function report(Sector $sector)
+    {
+        $area = Sector::query()->where('id', $sector->id)->with('streets')->first();
+        
+        $name= $area->name;
+
+        $title= 'SECTOR';
+
+        $subTitle= 'CALLES';
+
+        $subAreas= $area->streets;
+
+        $total = $subAreas->count();
+
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $pdf = PDF::loadView('pdf.report-area', compact(['subAreas', 'emissionDate', 'total', 'name', 'title', 'subTitle']));
+        return $pdf->download('reporte-sector.pdf');
     }
 
 }

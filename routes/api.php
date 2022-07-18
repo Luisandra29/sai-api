@@ -28,9 +28,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('states', 'StateController');
     Route::resource('parishes', 'ParishController');
+
     Route::resource('communities', 'CommunityController');
     Route::resource('sectors', 'SectorController');
     Route::resource('streets', 'StreetController');
+
+
+    Route::get('parishes/{parish}/report', 'ParishController@report');
+    Route::get('communities/{community}/report', 'CommunityController@report');
+    Route::get('sectors/{sector}/report', 'SectorController@report');
+    Route::get('streets/{street}/report', 'StreetController@report');
 
     Route::resource('categories', 'CategoryController');
 

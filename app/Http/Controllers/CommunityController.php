@@ -6,10 +6,12 @@ use App\Models\Community;
 use App\Models\Parish;
 use App\Http\Requests\CreateCommunityRequest;
 use Illuminate\Http\Request;
+use PDF;
+use Carbon\Carbon;
 
 class CommunityController extends Controller
 {
-/**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -100,5 +102,26 @@ class CommunityController extends Controller
         $community->delete();
 
         return $community;
+    }
+
+
+    public function report(Community $community)
+    {
+        $area = Community::query()->where('id', $community->id)->with('sectors')->first();
+
+        $name= $area->name;
+
+        $title= 'COMUNIDAD';
+
+        $subTitle= 'SECTORES';
+
+        $subAreas= $area->sectors;
+
+        $total = $subAreas->count();
+
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $pdf = PDF::loadView('pdf.report-area', compact(['subAreas', 'emissionDate', 'total', 'name', 'title', 'subTitle']));
+        return $pdf->download('reporte-comunidad.pdf');
     }
 }

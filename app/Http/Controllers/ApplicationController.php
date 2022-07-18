@@ -41,7 +41,7 @@ class ApplicationController extends Controller
                 });
             }
             if (array_key_exists('person_id', $filters)) {
-                $query->where('person_id', $filters['person_id']); 
+                $query->where('person_id', $filters['person_id']);
             }
             // Ejemplo de búsqueda global
             if (array_key_exists('search', $filters)) {
@@ -71,10 +71,10 @@ class ApplicationController extends Controller
             }
 
             if (array_key_exists('state_id', $filters)) {
-                $query->where('state_id', $filters['state_id']); 
+                $query->where('state_id', $filters['state_id']);
             }
             if (array_key_exists('subcategory_id', $filters)) {
-                $query->where('subcategory_id', $filters['subcategory_id']); 
+                $query->where('subcategory_id', $filters['subcategory_id']);
             }
             if (array_key_exists('category_id', $filters)) {
                 $query->whereHas('subcategory.category', function($q) use ($filters) {
@@ -105,7 +105,13 @@ class ApplicationController extends Controller
                 $query->whereHas('person.positions', function ($query) use ($filters) {
                     $query->where('position_id', $filters['position_id']);
                 });
-            }  
+            }
+            if (array_key_exists('start_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('finish_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
+            }
         }
 
         if ($sort && $order) {
@@ -117,23 +123,22 @@ class ApplicationController extends Controller
         }*/
 
         if ($request->type == 'pdf') {
-            return $this->report($query);
+            return $this->report($query, $request);
         }
 
         return $query->paginate($results);
-
     }
 
-    public function report($query)
+    public function report($query, $request)
     {
         $applications = $query->get();
         $listName = strtoupper($applications->first()->state->list_name);
         $total = $query->count();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
-        //$data = compact(['applications', 'emissionDate', 'total', 'listName']);
+        $title = $request->has('title') ? $request->title : '';
 
-        $pdf = PDF::loadView('pdf.report', compact(['applications', 'emissionDate', 'total', 'listName']));
+        $pdf = PDF::loadView('pdf.report', compact(['applications', 'emissionDate', 'total', 'listName', 'title']));
         return $pdf->download('reporte-solicitudes.pdf');
     }
 

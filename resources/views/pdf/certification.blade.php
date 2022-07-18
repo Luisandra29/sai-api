@@ -97,7 +97,7 @@
             <p style="text-align: center;font-weight:bold;text-decoration:underline;">CERTIFICADO DE APROBACIÓN DE SOLICITUD</p>
 
             <div style="text-align: justify;text-justify: inter-word;margin-right:50px;margin-top: 10px;margin-bottom:20px;text-indent:50px;">
-                <p>ANTE TODO, RECIBAN UN CORDIAL SALUDO REVOLUCIONARIO Y SOCIALISTA. DESDE LA ALCALDÍA BOLIVARIANA DEL MUNICIPIO BERMÚDEZ, YO <strong>NIRCIA VIRGINIA VILLEGAS MARCANO</strong>, ALCALDESA QUE SOY DE DICHO MUNICIPIO, TENGO EL AGRADO DE DIRIGIRME A USTED PARA INFORMARLE QUE SU SOLICITUD HA SIDO APROBADA DE MANERA SATISFACTORIA.</p>
+                <p>ANTE TODO, RECIBAN UN CORDIAL SALUDO REVOLUCIONARIO Y SOCIALISTA. DESDE LA ALCALDÍA BOLIVARIANA DEL MUNICIPIO BERMÚDEZ, YO <strong>JULIO RODRÍGUEZ</strong>, ALCALDE QUE SOY DE DICHO MUNICIPIO, TENGO EL AGRADO DE DIRIGIRME A USTED PARA INFORMARLE QUE SU SOLICITUD HA SIDO APROBADA DE MANERA SATISFACTORIA.</p>
                 <p>ES NECESARIO QUE SE COLOQUE EN CONTACTO INMEDIATO CON EL PERSONAL DE DESPACHO PARA QUE ESTOS LE AUTORICEN DICHA SOLICITUD O AYUDA (TIENE UN PLAZO DE 15 DÍAS) PARA FORMALIZAR SU APROBACIÓN.</p>
                 <p>SIN MÁS QUE HACER REFERENCIA, ANTE USTED.</p>
             </div>
@@ -109,7 +109,7 @@
                 <br>
               ________________________________<br>
                 <br>
-                Nírcia Villegas<br>
+                Julio Rodríguez<br>
                 Alcaldía Bolivariana del Municipio Bermúdez<br>
             </p>
         </div>
